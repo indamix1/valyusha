@@ -25,19 +25,25 @@ export function formatPrice(
 
 // Накладає переклад потрібної мови поверх базових ru-полів (відкат на ru, якщо порожньо).
 export function localizeTour(tour: Tour, locale: Locale): Tour {
-  if (locale === 'ru') return tour
-  const t = tour.translations?.[locale]
-  if (!t) return tour
-  return {
+  // гарантуємо масиви (колонки можуть бути відсутні до міграції)
+  const base: Tour = {
     ...tour,
-    title: t.title || tour.title,
-    summary: t.summary || tour.summary,
-    description: t.description || tour.description,
-    org_details: t.org_details || tour.org_details,
-    price_details: t.price_details || tour.price_details,
-    participants: t.participants || tour.participants,
-    includes: t.includes && t.includes.length ? t.includes : tour.includes,
-    excludes: t.excludes && t.excludes.length ? t.excludes : tour.excludes,
+    includes: tour.includes ?? [],
+    excludes: tour.excludes ?? [],
+  }
+  if (locale === 'ru') return base
+  const t = tour.translations?.[locale]
+  if (!t) return base
+  return {
+    ...base,
+    title: t.title || base.title,
+    summary: t.summary || base.summary,
+    description: t.description || base.description,
+    org_details: t.org_details || base.org_details,
+    price_details: t.price_details || base.price_details,
+    participants: t.participants || base.participants,
+    includes: t.includes && t.includes.length ? t.includes : base.includes,
+    excludes: t.excludes && t.excludes.length ? t.excludes : base.excludes,
   }
 }
 
