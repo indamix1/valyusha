@@ -88,5 +88,53 @@
     "whatsapp": "Message on WhatsApp",
     "copyright": "© 2026 Valyusha · Guide in Japan",
     "rights": "All rights reserved"
+  },
+  "category": {
+    "ctaTitle": "Ready to plan your trip?",
+    "ctaButton": "Get in touch"
+  },
+  "categories": {
+    "pro-mene": {
+      "title": "About me",
+      "body": [
+        "My name is Valentyna. I'm a licensed guide and escort in Japan and a domestic-tourism manager. I professionally organise journeys across the Tokyo, Hakone, Odawara, Fuji, Kamakura, Izu and Nikko regions.",
+        "I live in Japan and study its culture, history and traditions in depth. My focus is private and family tours, group escorting, bespoke routes and themed journeys: samurai history, the legends of Fuji, Hakone crafts, the Edo quarters, temples, cuisine and nature.",
+        "I work with individual travellers, families, VIP guests and cruise passengers."
+      ]
+    },
+    "ekskursii": {
+      "title": "Excursions",
+      "body": [
+        "Bespoke excursions across Japan — group and private. I show both the landmark sights and the corners you won't find in guidebooks.",
+        "I tailor every route to your pace, interests and group — comfortable both for first-timers and for those who want to know Japan more deeply."
+      ]
+    },
+    "individualni": {
+      "title": "Individual tours",
+      "body": [
+        "Private day routes and multi-day journeys — fully built around your request. You choose the cities, pace and themes; I take care of the organisation.",
+        "Ideal for families, couples and small groups who value personal attention and a flexible schedule."
+      ]
+    },
+    "kruizni": {
+      "title": "For cruise guests",
+      "body": [
+        "I'll meet you right at the port and run a full excursion within your ship's call — unhurried, and with a guarantee of getting you back before departure.",
+        "I plan the route so that in a few hours you see the most and take home vivid impressions."
+      ]
+    },
+    "transferi": {
+      "title": "Transfers",
+      "body": [
+        "Comfortable transfers between airports, cities and hotels. I'll help with logistics at any stage of your trip.",
+        "Meet-and-greet, escorting and transfers — calm and on schedule."
+      ]
+    },
+    "kontakty": {
+      "title": "Contacts",
+      "body": [
+        "Reach out in whatever way suits you — I reply on WhatsApp, Telegram, Viber or by email. I'll be glad to help plan your journey across Japan."
+      ]
+    }
   }
 }

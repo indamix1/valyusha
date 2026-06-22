@@ -162,6 +162,18 @@
   .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
   .gallery img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px;display:block}
 
+  /* category / info pages */
+  .page-head{background:linear-gradient(180deg,var(--rose-bg),var(--paper));padding:60px 0 46px;border-bottom:1px solid var(--line)}
+  .page-head h1{font-family:var(--serif);font-weight:500;font-size:clamp(32px,5vw,52px);line-height:1.08;margin-top:10px}
+  .page-prose{max-width:760px}
+  .page-prose p{font-size:18px;color:var(--ink-soft);line-height:1.65;margin-bottom:18px}
+  .contacts-card{display:grid;gap:16px;margin:6px 0 4px}
+  .contacts-card a{display:inline-flex;align-items:center;gap:12px;font-size:17px;font-weight:600;color:var(--ink)}
+  .contacts-card a:hover{color:var(--rose-deep)}
+  .contacts-card .ico{color:var(--rose-deep);flex:none}
+  .page-cta{margin-top:36px;padding-top:28px;border-top:1px solid var(--line)}
+  .page-cta h3{font-family:var(--serif);font-weight:600;font-size:24px;margin-bottom:18px}
+
   .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
   .reveal.in{opacity:1;transform:none}
 
