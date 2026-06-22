@@ -3,31 +3,14 @@ import { createClient } from '@/lib/supabase/server'
 import type { Locale } from '@/lib/content'
 import type { Tour } from '@/types/database'
 
-const CURRENCY_SYMBOL: Record<string, string> = {
-  USD: '$',
-  EUR: '€',
-  JPY: '¥',
-}
-
-// Форматує ціну для бейджа картки: "$480", "€150". Порожньо, якщо ціни немає.
-export function formatPrice(
-  price: number | string | null,
-  currency: string
-): string {
-  if (price === null || price === '') return ''
-  const amount = Number(price)
-  if (!Number.isFinite(amount)) return ''
-  const symbol = CURRENCY_SYMBOL[currency] ?? `${currency} `
-  // прибираємо зайві .00 у цілих сумах
-  const rounded = Number.isInteger(amount) ? amount : Math.round(amount)
-  return `${symbol}${rounded}`
-}
+export { formatPrice } from '@/lib/format'
 
 // Накладає переклад потрібної мови поверх базових ru-полів (відкат на ru, якщо порожньо).
 export function localizeTour(tour: Tour, locale: Locale): Tour {
   // гарантуємо масиви (колонки можуть бути відсутні до міграції)
   const base: Tour = {
     ...tour,
+    seasons: tour.seasons ?? [],
     includes: tour.includes ?? [],
     excludes: tour.excludes ?? [],
   }

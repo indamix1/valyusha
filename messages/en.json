@@ -52,6 +52,11 @@
     "more": "Learn more →",
     "all": "All routes",
     "participants": "people",
+    "seasonAll": "All",
+    "seasonSpring": "Spring 🌸",
+    "seasonSummer": "Summer ☀️",
+    "seasonAutumn": "Autumn 🍁",
+    "seasonWinter": "Winter ❄️",
     "empty": "Routes are coming soon."
   },
   "about": {

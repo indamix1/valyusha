@@ -40,6 +40,7 @@ export default function TourForm({ tour }: { tour?: Tour }) {
   const [duration, setDuration] = useState(tour?.duration ?? '')
   const [participants, setParticipants] = useState(tour?.participants ?? '')
   const [format, setFormat] = useState(tour?.format ?? 'both')
+  const [seasons, setSeasons] = useState<string[]>(tour?.seasons ?? [])
   const [isActive, setIsActive] = useState(tour?.is_active ?? true)
   const [sortOrder, setSortOrder] = useState(tour?.sort_order?.toString() ?? '0')
   const [coverUrl, setCoverUrl] = useState(tour?.cover_url ?? '')
@@ -130,6 +131,7 @@ export default function TourForm({ tour }: { tour?: Tour }) {
         duration: duration || null,
         participants: participants || null,
         format,
+        seasons,
         includes: toLines(includes),
         excludes: toLines(excludes),
         cover_url: cover,
@@ -205,6 +207,17 @@ export default function TourForm({ tour }: { tour?: Tour }) {
         <option value="group">Тільки груповий</option>
         <option value="individual">Тільки індивідуальний</option>
       </select>
+
+      <label style={labelStyle}>Сезони</label>
+      <div style={{ display: 'flex', gap: 16, marginTop: 6, marginBottom: 16 }}>
+        {(['spring', 'summer', 'autumn', 'winter'] as const).map((s) => (
+          <label key={s} style={{ ...labelStyle, display: 'flex', alignItems: 'center', gap: 6, fontWeight: 400 }}>
+            <input type="checkbox" checked={seasons.includes(s)}
+              onChange={(e) => setSeasons(e.target.checked ? [...seasons, s] : seasons.filter((x) => x !== s))} />
+            {{ spring: 'Весна 🌸', summer: 'Літо ☀️', autumn: 'Осінь 🍁', winter: 'Зима ❄️' }[s]}
+          </label>
+        ))}
+      </div>
 
       <label style={labelStyle}>Головне фото</label>
       {coverUrl && !file && (

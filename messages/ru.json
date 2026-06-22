@@ -52,6 +52,11 @@
     "more": "Подробнее →",
     "all": "Все маршруты",
     "participants": "чел.",
+    "seasonAll": "Все",
+    "seasonSpring": "Весна 🌸",
+    "seasonSummer": "Лето ☀️",
+    "seasonAutumn": "Осень 🍁",
+    "seasonWinter": "Зима ❄️",
     "empty": "Маршруты появятся в ближайшее время."
   },
   "about": {

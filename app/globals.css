@@ -77,6 +77,10 @@
 
   /* routes */
   .routes-sec{background:var(--rose-bg)}
+  .season-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px;justify-content:center}
+  .season-tab{padding:8px 20px;border-radius:30px;border:1px solid var(--line);background:transparent;font-size:14px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .2s}
+  .season-tab:hover{border-color:var(--rose);color:var(--ink)}
+  .season-tab.active{background:var(--ink);color:#fff;border-color:var(--ink)}
   .routes{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
   .route{background:var(--card);border-radius:16px;overflow:hidden;border:1px solid var(--line);transition:transform .25s,box-shadow .25s}
   .route:hover{transform:translateY(-6px);box-shadow:0 22px 42px -24px rgba(49,45,41,.4)}
