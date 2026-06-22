@@ -1,6 +1,7 @@
 import { getTranslations } from 'next-intl/server'
 import { getSiteContent, type Locale } from '@/lib/content'
 import { getTours, formatPrice } from '@/lib/tours'
+import { getReviews } from '@/lib/reviews'
 import { Link } from '@/i18n/navigation'
 
 export default async function Home({
@@ -11,7 +12,25 @@ export default async function Home({
   const { locale } = await params
   const c = await getSiteContent(locale as Locale)
   const tours = await getTours(locale as Locale)
+  const dbReviews = await getReviews(locale as Locale)
   const t = await getTranslations()
+
+  // Відгуки: з БД, якщо є; інакше демо з перекладів (щоб секція не була порожня).
+  const reviews = dbReviews.length
+    ? dbReviews.map((r) => ({
+        id: r.id,
+        author_name: r.author_name,
+        author_city: r.author_city,
+        rating: r.rating,
+        text: r.text,
+      }))
+    : [1, 2, 3].map((n) => ({
+        id: `demo-${n}`,
+        author_name: t(`reviews.r${n}_name`),
+        author_city: t(`reviews.r${n}_city`),
+        rating: 5,
+        text: t(`reviews.r${n}_text`),
+      }))
   return (
     <>
 <section className="hero">
@@ -169,23 +188,14 @@ export default async function Home({
       <h2>{t('reviews.title')}</h2>
     </div>
     <div className="reviews">
-      <div className="review">
-        <div className="review-head"><span className="avatar"></span><div><b>{t('reviews.r1_name')}</b><span>{t('reviews.r1_city')}</span></div></div>
-        <div className="stars">★★★★★</div>
-        <p>{t('reviews.r1_text')}</p>
-      </div>
-      <div className="review">
-        <div className="review-head"><span className="avatar"></span><div><b>{t('reviews.r2_name')}</b><span>{t('reviews.r2_city')}</span></div></div>
-        <div className="stars">★★★★★</div>
-        <p>{t('reviews.r2_text')}</p>
-      </div>
-      <div className="review">
-        <div className="review-head"><span className="avatar"></span><div><b>{t('reviews.r3_name')}</b><span>{t('reviews.r3_city')}</span></div></div>
-        <div className="stars">★★★★★</div>
-        <p>{t('reviews.r3_text')}</p>
-      </div>
+      {reviews.map((r) => (
+        <div className="review" key={r.id}>
+          <div className="review-head"><span className="avatar"></span><div><b>{r.author_name}</b>{r.author_city && <span>{r.author_city}</span>}</div></div>
+          <div className="stars">{'★'.repeat(Math.max(1, Math.min(5, r.rating)))}</div>
+          <p>{r.text}</p>
+        </div>
+      ))}
     </div>
-    <div className="reviews-foot"><a href="#" className="btn btn-ghost">{t('reviews.more')}</a></div>
   </div>
 </section>
     </>

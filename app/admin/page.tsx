@@ -33,7 +33,7 @@ export default async function AdminHome() {
         <Card href="/admin/tours" label="Тури" value={toursCount ?? 0} active />
         <Card href="/admin/content" label="Тексти головної" active />
         <Card label="Статті блогу" value={postsCount ?? 0} />
-        <Card label="Відгуки" value={reviewsCount ?? 0} />
+        <Card href="/admin/reviews" label="Відгуки" value={reviewsCount ?? 0} active />
       </div>
 
       <p style={{ marginTop: 28, color: '#8A7F75', fontSize: 14 }}>

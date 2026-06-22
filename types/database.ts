@@ -46,6 +46,12 @@ export interface Post {
   created_at: string
 }
 
+// Переклади відгуку: базові поля = ru, тут лежать uk/en.
+export interface ReviewTranslation {
+  text?: string
+  author_city?: string
+}
+
 export interface Review {
   id: string
   author_name: string
@@ -56,6 +62,7 @@ export interface Review {
   tour_id: string | null
   is_approved: boolean
   sort_order: number
+  translations: Record<string, ReviewTranslation>
   created_at: string
 }
 
