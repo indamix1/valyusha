@@ -11,6 +11,7 @@ const navItems = [
   { href: '/individualni', key: 'individual' },
   { href: '/kruizni', key: 'cruise' },
   { href: '/transferi', key: 'transfers' },
+  { href: '/blog', key: 'blog' },
   { href: '/kontakty', key: 'contacts' },
 ] as const
 

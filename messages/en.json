@@ -6,7 +6,15 @@
     "individual": "Individual tours",
     "cruise": "For cruise guests",
     "transfers": "Transfers",
+    "blog": "Blog",
     "contacts": "Contacts"
+  },
+  "blog": {
+    "eyebrow": "Notes on Japan",
+    "title": "Blog",
+    "empty": "Articles are coming soon.",
+    "readMore": "Read →",
+    "back": "All articles"
   },
   "brand": {
     "sub": "Guide in Japan"

@@ -34,6 +34,13 @@ export interface Tour {
   created_at: string
 }
 
+// Переклади статті: базові поля = ru, тут лежать uk/en.
+export interface PostTranslation {
+  title?: string
+  excerpt?: string
+  content?: string
+}
+
 export interface Post {
   id: string
   slug: string
@@ -43,6 +50,7 @@ export interface Post {
   cover_url: string | null
   published: boolean
   published_at: string | null
+  translations: Record<string, PostTranslation>
   created_at: string
 }
 
