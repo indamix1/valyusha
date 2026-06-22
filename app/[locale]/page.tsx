@@ -111,7 +111,7 @@ export default async function Home({
               <div className="route-body">
                 <h3>{tour.title}</h3>
                 {tour.summary && <p>{tour.summary}</p>}
-                <Link href={`/tury/${tour.slug}`} className="route-link">
+                <Link href={`/tury/${tour.slug}`} className="route-link" target="_blank" rel="noopener noreferrer">
                   {t('routes.more')}
                 </Link>
               </div>

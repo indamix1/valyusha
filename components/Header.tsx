@@ -42,16 +42,21 @@ export default function Header() {
         </Link>
 
         <nav className={open ? 'nav-links open' : 'nav-links'}>
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={pathname === item.href ? 'active' : ''}
-              onClick={() => setOpen(false)}
-            >
-              {t(item.key)}
-            </Link>
-          ))}
+          {navItems.map((item) => {
+            const isHome = item.href === '/'
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={pathname === item.href ? 'active' : ''}
+                target={isHome ? undefined : '_blank'}
+                rel={isHome ? undefined : 'noopener noreferrer'}
+                onClick={() => setOpen(false)}
+              >
+                {t(item.key)}
+              </Link>
+            )
+          })}
         </nav>
 
         <div className="nav-right">
