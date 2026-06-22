@@ -1,15 +1,10 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import { getTranslations } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
 import { getTour, formatPrice } from '@/lib/tours'
 import { getSiteContent, type Locale } from '@/lib/content'
-
-// Підписи формату туру (інтерфейс поки укр.; винесення в i18n — окремий пункт).
-const FORMAT_LABEL: Record<string, string> = {
-  group: 'Груповий тур',
-  individual: 'Індивідуальний тур',
-  both: 'Груповий / індивідуальний',
-}
+import type { TourFormat } from '@/types/database'
 
 type Params = Promise<{ locale: string; slug: string }>
 
@@ -33,8 +28,14 @@ export default async function TourPage({ params }: { params: Params }) {
   if (!tour) notFound()
 
   const c = await getSiteContent(locale as Locale)
+  const t = await getTranslations('tour')
   const waLink = c.contact_whatsapp || 'https://wa.me/818033605724'
   const price = formatPrice(tour.price, tour.currency)
+  const formatLabel: Record<TourFormat, string> = {
+    group: t('format_group'),
+    individual: t('format_individual'),
+    both: t('format_both'),
+  }
 
   return (
     <article className="tour-page">
@@ -48,14 +49,14 @@ export default async function TourPage({ params }: { params: Params }) {
       >
         <div className="wrap">
           <Link href="/#routes" className="tour-back">
-            ← Усі маршрути
+            ← {t('back')}
           </Link>
           <div className="tour-hero-inner">
             {tour.city && <span className="eyebrow">{tour.city}</span>}
             <h1>{tour.title}</h1>
             <div className="tour-meta">
               {tour.duration && <span>{tour.duration}</span>}
-              <span>{FORMAT_LABEL[tour.format] ?? FORMAT_LABEL.both}</span>
+              <span>{formatLabel[tour.format] ?? formatLabel.both}</span>
             </div>
           </div>
         </div>
@@ -80,7 +81,7 @@ export default async function TourPage({ params }: { params: Params }) {
 
             {tour.includes.length > 0 && (
               <div className="tour-block">
-                <h3>Що включено</h3>
+                <h3>{t('includes')}</h3>
                 <ul className="checklist">
                   {tour.includes.map((item, i) => (
                     <li key={i}>
@@ -108,13 +109,13 @@ export default async function TourPage({ params }: { params: Params }) {
             <div className="price-card">
               {price ? (
                 <>
-                  <div className="price-big">від {price}</div>
+                  <div className="price-big">{t('from')} {price}</div>
                   {tour.price_note && (
                     <div className="price-note">{tour.price_note}</div>
                   )}
                 </>
               ) : (
-                <div className="price-note">Вартість — за запитом</div>
+                <div className="price-note">{t('priceOnRequest')}</div>
               )}
 
               {tour.price_details && (
@@ -125,9 +126,9 @@ export default async function TourPage({ params }: { params: Params }) {
                 <svg className="ico" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M12 2a10 10 0 0 0-8.6 15l-1.4 5 5.1-1.3A10 10 0 1 0 12 2z" />
                 </svg>
-                Звʼязатися
+                {t('contact')}
               </a>
-              <p className="price-hint">Відповім у WhatsApp / Telegram</p>
+              <p className="price-hint">{t('contactHint')}</p>
             </div>
           </aside>
         </div>
@@ -137,8 +138,8 @@ export default async function TourPage({ params }: { params: Params }) {
         <section className="sec gallery-sec">
           <div className="wrap">
             <div className="sec-title">
-              <span className="eyebrow">Фото</span>
-              <h2>Галерея</h2>
+              <span className="eyebrow">{t('galleryEyebrow')}</span>
+              <h2>{t('galleryTitle')}</h2>
             </div>
             <div className="gallery">
               {tour.gallery.map((src, i) => (

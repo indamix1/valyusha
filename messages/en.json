@@ -7,5 +7,86 @@
     "cruise": "For cruise guests",
     "transfers": "Transfers",
     "contacts": "Contacts"
+  },
+  "brand": {
+    "sub": "Guide in Japan"
+  },
+  "hero": {
+    "ctaPrimary": "Excursions & tours",
+    "ctaSecondary": "Get in touch"
+  },
+  "trust": {
+    "licensed_t": "Licensed guide",
+    "licensed_d": "Official guide licence in Japan",
+    "individual_t": "Personal approach",
+    "individual_d": "Routes tailored to your wishes",
+    "comfort_t": "Comfort & safety",
+    "comfort_d": "24/7 support",
+    "lang_t": "Russian & Ukrainian speaking",
+    "lang_d": "Clear and welcoming"
+  },
+  "cats": {
+    "eyebrow": "How I can help",
+    "title": "Choose your format",
+    "excursions_t": "Excursions",
+    "excursions_d": "Group and private",
+    "individual_t": "Individual tours",
+    "individual_d": "Routes built for you",
+    "cruise_t": "For cruise guests",
+    "cruise_d": "Tours from the port",
+    "transfers_t": "Transfers",
+    "transfers_d": "Airports, cities, hotels"
+  },
+  "routes": {
+    "eyebrow": "Where we'll go",
+    "title": "Popular routes",
+    "from": "from",
+    "more": "Learn more →",
+    "all": "All routes",
+    "empty": "Routes are coming soon."
+  },
+  "about": {
+    "eyebrow": "Hi! I'm Valentyna",
+    "point1": "Officially licensed guide in Japan",
+    "point2": "Living in Japan for over 20 years — I know its culture, traditions and everyday life",
+    "point3": "I craft routes that reveal the real Japan, not just the popular spots",
+    "point4": "I help organise your trip end to end",
+    "cta": "Learn more about me",
+    "mapTitle": "Where I'll take you"
+  },
+  "reviews": {
+    "eyebrow": "What guests say",
+    "title": "Reviews from my guests",
+    "more": "More reviews",
+    "r1_name": "Olena",
+    "r1_city": "Kyiv",
+    "r1_text": "Valentyna is an incredible guide and a lovely person! Japan opened up for us from a different side. Everything was perfectly organised, engaging and heartfelt. Thank you!",
+    "r2_name": "Ihor",
+    "r2_city": "Odesa",
+    "r2_text": "We travelled by cruise and took a tour with Valentyna in Tokyo. We saw the most in a short time. A true professional!",
+    "r3_name": "Maryna",
+    "r3_city": "Toronto",
+    "r3_text": "Thank you for a magical day in Hakone! The route, the views, the onsen — everything was wonderful. I recommend her wholeheartedly!"
+  },
+  "tour": {
+    "back": "All routes",
+    "format_group": "Group tour",
+    "format_individual": "Private tour",
+    "format_both": "Group / private",
+    "includes": "What's included",
+    "from": "from",
+    "priceOnRequest": "Price on request",
+    "contact": "Get in touch",
+    "contactHint": "I'll reply on WhatsApp / Telegram",
+    "galleryEyebrow": "Photos",
+    "galleryTitle": "Gallery"
+  },
+  "footer": {
+    "tagline": "Bespoke excursions and private tours across Japan with a licensed Russian- and Ukrainian-speaking guide.",
+    "contactTitle": "Get in touch",
+    "ctaTagline": "Japan is waiting for you!",
+    "whatsapp": "Message on WhatsApp",
+    "copyright": "© 2026 Valyusha · Guide in Japan",
+    "rights": "All rights reserved"
   }
 }

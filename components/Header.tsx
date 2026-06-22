@@ -22,6 +22,7 @@ const locales = [
 
 export default function Header() {
   const t = useTranslations('nav')
+  const b = useTranslations('brand')
   const pathname = usePathname()
   const router = useRouter()
   const activeLocale = useLocale()
@@ -37,7 +38,7 @@ export default function Header() {
       <div className="wrap nav">
         <Link href="/" className="brand" onClick={() => setOpen(false)}>
           <span className="name">Valyusha</span>
-          <span className="sub">Гід в Японії</span>
+          <span className="sub">{b('sub')}</span>
         </Link>
 
         <nav className={open ? 'nav-links open' : 'nav-links'}>
