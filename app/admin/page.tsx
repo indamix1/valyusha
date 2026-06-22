@@ -29,26 +29,27 @@ export default async function AdminHome() {
       </div>
       <p style={{ color: '#8A7F75', marginBottom: 28 }}>Вхід виконано: {user.email}</p>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 16 }}>
         <Card href="/admin/tours" label="Тури" value={toursCount ?? 0} active />
+        <Card href="/admin/content" label="Тексти головної" active />
         <Card label="Статті блогу" value={postsCount ?? 0} />
         <Card label="Відгуки" value={reviewsCount ?? 0} />
       </div>
 
       <p style={{ marginTop: 28, color: '#8A7F75', fontSize: 14 }}>
-        Натисніть «Тури», щоб додавати та редагувати маршрути. Блог і відгуки додамо далі.
+        «Тури» — маршрути. «Тексти головної» — заголовки й контакти. Блог і відгуки додамо далі.
       </p>
     </div>
   )
 }
 
-function Card({ label, value, href, active }: { label: string; value: number; href?: string; active?: boolean }) {
+function Card({ label, value, href, active }: { label: string; value?: number; href?: string; active?: boolean }) {
   const inner = (
     <div style={{
       background: '#fff', border: active ? '1px solid #BE6273' : '1px solid rgba(49,45,41,.12)',
       borderRadius: 14, padding: 22, height: '100%',
     }}>
-      <div style={{ fontSize: 32, fontWeight: 800, color: '#BE6273' }}>{value}</div>
+      {value !== undefined && <div style={{ fontSize: 32, fontWeight: 800, color: '#BE6273' }}>{value}</div>}
       <div style={{ fontSize: 14, color: '#8A7F75', marginTop: 4 }}>{label}</div>
       {active && <div style={{ fontSize: 13, color: '#BE6273', marginTop: 8, fontWeight: 700 }}>Керувати →</div>}
     </div>
