@@ -59,6 +59,31 @@
     "seasonWinter": "Winter ❄️",
     "empty": "Routes are coming soon."
   },
+  "custom": {
+    "eyebrow": "Personal approach",
+    "title": "Custom itineraries",
+    "desc1": "Didn't find the right tour? I'll create a custom itinerary based on your preferences, pace and interests — from a single day to a full trip.",
+    "desc2": "Pick a city or region — and write to me. Let's plan the perfect journey together!",
+    "cta": "Discuss your route",
+    "citiesTitle": "Cities & regions",
+    "cities": "Tokyo, Odawara, Kamakura, Hakone, Mt. Fuji, Izu, Nikko, Kyoto, Osaka, Nara, Kobe, Hiroshima"
+  },
+  "bonuses": {
+    "eyebrow": "Special experiences",
+    "title": "Extra bonuses",
+    "tea_t": "Tea ceremony",
+    "tea_d": "An authentic Japanese tea ceremony in a traditional tea house",
+    "calligraphy_t": "Calligraphy",
+    "calligraphy_d": "Japanese calligraphy workshop with a professional master",
+    "cooking_t": "Cooking class",
+    "cooking_d": "Make sushi, ramen or other Japanese dishes hands-on",
+    "kimono_t": "Kimono walk",
+    "kimono_d": "Kimono rental, dressing up and a photo walk in traditional attire",
+    "drift_t": "Drift experience",
+    "drift_d": "Thrilling drifting at a professional track in Japan",
+    "onsen_t": "Hot springs",
+    "onsen_d": "Onsen bathing — relax in scenic natural hot spring baths"
+  },
   "about": {
     "eyebrow": "Hi! I'm Valentyna",
     "point1": "Officially licensed guide in Japan",

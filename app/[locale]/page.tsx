@@ -128,6 +128,79 @@ export default async function Home({
   </div>
 </section>
 
+<section className="sec custom-sec" id="custom">
+  <div className="wrap">
+    <div className="sec-title">
+      <span className="eyebrow">{t('custom.eyebrow')}</span>
+      <h2>{t('custom.title')}</h2>
+    </div>
+    <div className="custom-grid">
+      <div className="custom-text">
+        <p>{t('custom.desc1')}</p>
+        <p>{t('custom.desc2')}</p>
+        <a href="https://wa.me/818033605724" className="btn btn-dark">
+          <svg className="ico" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.4 5 5.1-1.3A10 10 0 1 0 12 2z"/></svg>
+          {t('custom.cta')}
+        </a>
+      </div>
+      <div>
+        <h4 style={{ fontSize: '13px', fontWeight: 800, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--muted)', marginBottom: '16px' }}>
+          {t('custom.citiesTitle')}
+        </h4>
+        <div className="city-tags">
+          {t('custom.cities').split(', ').map((city) => (
+            <span className="city-tag" key={city}>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              {city}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section className="sec" id="bonuses">
+  <div className="wrap">
+    <div className="sec-title">
+      <span className="eyebrow">{t('bonuses.eyebrow')}</span>
+      <h2>{t('bonuses.title')}</h2>
+    </div>
+    <div className="bonuses">
+      <div className="bonus">
+        <div className="bonus-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M18 8a6 6 0 0 1-6 6M6 8a6 6 0 0 0 6 6M12 14v4M8 18h8M6 8h12"/></svg></div>
+        <h3>{t('bonuses.tea_t')}</h3>
+        <p>{t('bonuses.tea_d')}</p>
+      </div>
+      <div className="bonus">
+        <div className="bonus-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M4 20L20 4M4 20l4-2 10-10-2-2L6 16z"/><path d="M14.5 5.5l2 2"/></svg></div>
+        <h3>{t('bonuses.calligraphy_t')}</h3>
+        <p>{t('bonuses.calligraphy_d')}</p>
+      </div>
+      <div className="bonus">
+        <div className="bonus-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M12 3C7 8 4 12 4 15a8 8 0 0 0 16 0c0-3-3-7-8-12z"/></svg></div>
+        <h3>{t('bonuses.cooking_t')}</h3>
+        <p>{t('bonuses.cooking_d')}</p>
+      </div>
+      <div className="bonus">
+        <div className="bonus-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M12 2a4 4 0 0 0-4 4v4h8V6a4 4 0 0 0-4-4zM4 14h16l-2 8H6z"/></svg></div>
+        <h3>{t('bonuses.kimono_t')}</h3>
+        <p>{t('bonuses.kimono_d')}</p>
+      </div>
+      <div className="bonus">
+        <div className="bonus-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+        <h3>{t('bonuses.drift_t')}</h3>
+        <p>{t('bonuses.drift_d')}</p>
+      </div>
+      <div className="bonus">
+        <div className="bonus-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M2 12c2-4 6-8 10-8s8 4 10 8c-2 4-6 8-10 8s-8-4-10-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <h3>{t('bonuses.onsen_t')}</h3>
+        <p>{t('bonuses.onsen_d')}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section className="sec" id="about">
   <div className="wrap">
     <div className="about-grid about">
