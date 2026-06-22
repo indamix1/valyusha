@@ -7,8 +7,7 @@ import { Link, usePathname, useRouter } from '@/i18n/navigation'
 const navItems = [
   { href: '/', key: 'home' },
   { href: '/pro-mene', key: 'about' },
-  { href: '/ekskursii', key: 'excursions' },
-  { href: '/individualni', key: 'individual' },
+  { href: '/tury', key: 'excursions' },
   { href: '/kruizni', key: 'cruise' },
   { href: '/transferi', key: 'transfers' },
   { href: '/blog', key: 'blog' },
@@ -43,21 +42,16 @@ export default function Header() {
         </Link>
 
         <nav className={open ? 'nav-links open' : 'nav-links'}>
-          {navItems.map((item) => {
-            const isHome = item.href === '/'
-            return (
+          {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 className={pathname === item.href ? 'active' : ''}
-                target={isHome ? undefined : '_blank'}
-                rel={isHome ? undefined : 'noopener noreferrer'}
                 onClick={() => setOpen(false)}
               >
                 {t(item.key)}
               </Link>
-            )
-          })}
+          ))}
         </nav>
 
         <div className="nav-right">

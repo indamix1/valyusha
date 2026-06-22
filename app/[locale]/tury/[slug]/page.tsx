@@ -156,6 +156,21 @@ export default async function TourPage({ params }: { params: Params }) {
                 {t('contact')}
               </a>
               <p className="price-hint">{t('contactHint')}</p>
+
+              <div className="pay-divider" />
+
+              <a
+                href="https://paypal.me/PLACEHOLDER"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-paypal"
+              >
+                <svg className="ico" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M7.02 21.5 8 16h2.2c4.82 0 7.72-3.28 8.38-7.5.18-1.17.08-2.2-.42-3A3.45 3.45 0 0 0 16.5 4H9.02a1 1 0 0 0-1 .85L5.5 20.65a.6.6 0 0 0 .6.7h.92zm2.55-8.5L10.8 6h5.2c.76 0 1.26.38 1.4 1.1-.56 3.32-2.84 5.9-6.83 5.9z" />
+                </svg>
+                {t('payOnline')}
+              </a>
+              <p className="price-hint">{t('payHint')}</p>
             </div>
           </aside>
         </div>

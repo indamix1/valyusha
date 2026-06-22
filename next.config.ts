@@ -5,7 +5,9 @@ import createNextIntlPlugin from 'next-intl/plugin'
 const withNextIntl = createNextIntlPlugin()
 
 const nextConfig: NextConfig = {
-  // тут за потреби будуть інші налаштування Next.js
+  experimental: {
+    viewTransition: true,
+  },
 }
 
 export default withNextIntl(nextConfig)

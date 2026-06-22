@@ -107,6 +107,11 @@
     "r3_city": "Toronto",
     "r3_text": "Thank you for a magical day in Hakone! The route, the views, the onsen — everything was wonderful. I recommend her wholeheartedly!"
   },
+  "toursPage": {
+    "eyebrow": "All destinations",
+    "title": "Routes & excursions",
+    "subtitle": "Bespoke tours across Japan — from day trips to multi-day journeys"
+  },
   "tour": {
     "back": "All routes",
     "format_group": "Group tour",
@@ -119,6 +124,8 @@
     "priceOnRequest": "Price on request",
     "contact": "Get in touch",
     "contactHint": "I'll reply on WhatsApp / Telegram",
+    "payOnline": "Pay online",
+    "payHint": "Secure payment via PayPal",
     "galleryEyebrow": "Photos",
     "galleryTitle": "Gallery"
   },
