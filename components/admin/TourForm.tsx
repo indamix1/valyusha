@@ -40,6 +40,8 @@ export default function TourForm({ tour }: { tour?: Tour }) {
   const [sortOrder, setSortOrder] = useState(tour?.sort_order?.toString() ?? '0')
   const [coverUrl, setCoverUrl] = useState(tour?.cover_url ?? '')
   const [file, setFile] = useState<File | null>(null)
+  const [gallery, setGallery] = useState<string[]>(tour?.gallery ?? [])
+  const [galleryFiles, setGalleryFiles] = useState<File[]>([])
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -68,13 +70,24 @@ export default function TourForm({ tour }: { tour?: Tour }) {
     try {
       let cover = coverUrl || null
 
-      // завантаження фото у Storage (bucket "media")
+      // завантаження головного фото у Storage (bucket "media")
       if (file) {
         const safeName = file.name.replace(/[^a-zA-Z0-9.]/g, '_')
         const path = `tours/${Date.now()}-${safeName}`
         const { error: upErr } = await supabase.storage.from('media').upload(path, file)
         if (upErr) throw upErr
         cover = supabase.storage.from('media').getPublicUrl(path).data.publicUrl
+      }
+
+      // завантаження фото галереї (можна кілька); додаємо до вже наявних
+      const galleryUrls = [...gallery]
+      for (let i = 0; i < galleryFiles.length; i++) {
+        const f = galleryFiles[i]
+        const safeName = f.name.replace(/[^a-zA-Z0-9.]/g, '_')
+        const path = `tours/gallery/${Date.now()}-${i}-${safeName}`
+        const { error: upErr } = await supabase.storage.from('media').upload(path, f)
+        if (upErr) throw upErr
+        galleryUrls.push(supabase.storage.from('media').getPublicUrl(path).data.publicUrl)
       }
 
       // Збираємо переклади: лише непорожні поля; порожня мова не потрапляє в jsonb.
@@ -98,6 +111,7 @@ export default function TourForm({ tour }: { tour?: Tour }) {
         duration: duration || null,
         format,
         cover_url: cover,
+        gallery: galleryUrls,
         is_active: isActive,
         sort_order: Number(sortOrder) || 0,
         translations,
@@ -163,6 +177,28 @@ export default function TourForm({ tour }: { tour?: Tour }) {
         </div>
       )}
       <input style={{ ...inputStyle, padding: 8 }} type="file" accept="image/*" onChange={(e) => setFile(e.target.files?.[0] ?? null)} />
+
+      <label style={labelStyle}>Галерея (можна кілька фото)</label>
+      {gallery.length > 0 && (
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 6, marginBottom: 8 }}>
+          {gallery.map((url, i) => (
+            <div key={i} style={{ position: 'relative' }}>
+              {/* фото в галереї */}
+              <img src={url} alt="" style={{ width: 110, height: 80, objectFit: 'cover', borderRadius: 8, display: 'block' }} />
+              <button type="button" title="Прибрати" onClick={() => setGallery(gallery.filter((_, j) => j !== i))}
+                style={{ position: 'absolute', top: 4, right: 4, width: 22, height: 22, borderRadius: '50%', border: 'none', background: 'rgba(0,0,0,.6)', color: '#fff', cursor: 'pointer', fontSize: 15, lineHeight: '20px', padding: 0 }}>
+                ×
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+      {galleryFiles.length > 0 && (
+        <p style={{ fontSize: 13, color: '#3C7A4E', marginTop: 4, marginBottom: 4 }}>
+          Нових файлів буде завантажено: {galleryFiles.length}
+        </p>
+      )}
+      <input style={{ ...inputStyle, padding: 8 }} type="file" accept="image/*" multiple onChange={(e) => setGalleryFiles(Array.from(e.target.files ?? []))} />
 
       <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
         <div style={{ flex: 1 }}>
