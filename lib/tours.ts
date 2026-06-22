@@ -49,3 +49,28 @@ export async function getTours(locale: Locale): Promise<Tour[]> {
 
   return (data ?? []).map((row) => localizeTour(row as Tour, locale))
 }
+
+// Один активний тур за slug, локалізований. null — якщо не знайдено/прихований.
+export async function getTour(
+  slug: string,
+  locale: Locale
+): Promise<Tour | null> {
+  // У page-компоненті slug може прийти URL-кодованим (напр. кирилиця) —
+  // нормалізуємо, щоб точно збігся зі значенням у БД.
+  let normalized = slug
+  try {
+    normalized = decodeURIComponent(slug)
+  } catch {
+    // лишаємо як є, якщо це не валідний %-escape
+  }
+
+  const supabase = await createClient()
+  const { data } = await supabase
+    .from('tours')
+    .select('*')
+    .eq('slug', normalized)
+    .eq('is_active', true)
+    .maybeSingle()
+
+  return data ? localizeTour(data as Tour, locale) : null
+}

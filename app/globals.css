@@ -134,6 +134,34 @@
   .foot-tagline{font-family:var(--script);font-size:30px;color:#F4C0CB;margin-bottom:4px}
   .foot-bot{margin-top:42px;padding-top:22px;border-top:1px solid rgba(255,255,255,.16);font-size:13px;color:rgba(255,255,255,.5);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
 
+  /* tour page */
+  .tour-hero{position:relative;min-height:420px;display:flex;align-items:flex-end;background-size:cover;background-position:center;color:#fff}
+  .tour-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(49,45,41,.15) 0%,rgba(49,45,41,.72) 100%)}
+  .tour-hero-fallback{background:linear-gradient(150deg,#D9A7B6,#9E5E78)}
+  .tour-hero .wrap{position:relative;z-index:1;width:100%;padding-top:28px;padding-bottom:44px}
+  .tour-back{display:inline-block;font-size:14px;font-weight:700;color:rgba(255,255,255,.9);margin-bottom:auto}
+  .tour-back:hover{color:#fff}
+  .tour-hero-inner{margin-top:60px}
+  .tour-hero .eyebrow{color:#F4C0CB}
+  .tour-hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(32px,5vw,52px);line-height:1.08;margin:10px 0 16px}
+  .tour-meta{display:flex;flex-wrap:wrap;gap:10px}
+  .tour-meta span{background:rgba(255,255,255,.18);backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,.25);border-radius:30px;padding:7px 16px;font-size:14px;font-weight:600}
+  .tour-grid{display:grid;grid-template-columns:1.7fr .9fr;gap:48px;align-items:start}
+  .tour-lead{font-size:20px;color:var(--ink-soft);line-height:1.5;margin-bottom:24px}
+  .tour-desc p{margin-bottom:16px;color:var(--ink-soft)}
+  .tour-block{margin-top:36px}
+  .tour-block h3{font-family:var(--serif);font-weight:600;font-size:24px;margin-bottom:18px}
+  .tour-aside{position:sticky;top:104px}
+  .price-card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:28px;box-shadow:0 22px 42px -30px rgba(49,45,41,.4)}
+  .price-big{font-family:var(--serif);font-weight:600;font-size:34px;color:var(--rose-deep);line-height:1}
+  .price-note{font-size:14px;color:var(--muted);margin-top:6px}
+  .price-details{white-space:pre-line;font-size:14px;color:var(--ink-soft);line-height:1.5;margin:18px 0;padding-top:16px;border-top:1px solid var(--line)}
+  .price-card .btn{width:100%;justify-content:center;margin-top:18px}
+  .price-hint{font-size:12.5px;color:var(--muted);text-align:center;margin-top:10px}
+  .gallery-sec{background:var(--paper-2)}
+  .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .gallery img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px;display:block}
+
   .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
   .reveal.in{opacity:1;transform:none}
 
@@ -147,6 +175,9 @@
     .cats{grid-template-columns:1fr 1fr}
     .routes{grid-template-columns:1fr 1fr}
     .about-grid{grid-template-columns:1fr;gap:32px}
+    .tour-grid{grid-template-columns:1fr;gap:32px}
+    .tour-aside{position:static}
+    .gallery{grid-template-columns:1fr 1fr}
     .reviews{grid-template-columns:1fr}
     .foot-grid{grid-template-columns:1fr 1fr}
     .foot-cta{grid-column:1/-1}
