@@ -9,7 +9,11 @@ export interface TourTranslation {
   title?: string
   summary?: string
   description?: string
+  org_details?: string
   price_details?: string
+  participants?: string
+  includes?: string[]
+  excludes?: string[]
 }
 
 export interface Tour {
@@ -19,13 +23,16 @@ export interface Tour {
   city: string | null
   summary: string | null
   description: string | null
+  org_details: string | null
   price: number | null
   currency: string
   price_note: string | null
   price_details: string | null
   duration: string | null
+  participants: string | null
   format: TourFormat
   includes: string[]
+  excludes: string[]
   cover_url: string | null
   gallery: string[]
   sort_order: number

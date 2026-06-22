@@ -53,10 +53,12 @@ supabase/                 schema.sql + migration-01.sql + migration-02.sql (іс
 
 ## База даних (Supabase, RLS увімкнено)
 Публіка читає лише активне/опубліковане; писати може лише авторизований (адмін).
-- **tours**: slug(unique), title, city, summary, description, price(numeric),
-  currency(default 'USD'), price_note, price_details(текст тарифів по групах),
-  duration, format('group'|'individual'|'both'), includes(text[]), cover_url,
-  gallery(text[]), sort_order, is_active, translations(jsonb), created_at
+- **tours**: slug(unique), title, city, summary, description, org_details(текст),
+  price(numeric), currency(default 'USD'), price_note, price_details(текст тарифів),
+  duration, participants(текст), format('group'|'individual'|'both'),
+  includes(text[]), excludes(text[]), cover_url, gallery(text[]), sort_order,
+  is_active, translations(jsonb: title/summary/description/org_details/price_details/
+  participants/includes/excludes по uk/en), created_at
 - **posts**: блог (slug, title, excerpt, content, cover_url, published, ...,
   translations jsonb)
 - **reviews**: author_name, author_city, avatar_url, rating, text, tour_id,

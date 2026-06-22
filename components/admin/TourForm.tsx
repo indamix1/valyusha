@@ -32,9 +32,13 @@ export default function TourForm({ tour }: { tour?: Tour }) {
   const [city, setCity] = useState(tour?.city ?? '')
   const [summary, setSummary] = useState(tour?.summary ?? '')
   const [description, setDescription] = useState(tour?.description ?? '')
+  const [orgDetails, setOrgDetails] = useState(tour?.org_details ?? '')
+  const [includes, setIncludes] = useState((tour?.includes ?? []).join('\n'))
+  const [excludes, setExcludes] = useState((tour?.excludes ?? []).join('\n'))
   const [price, setPrice] = useState(tour?.price?.toString() ?? '')
   const [priceDetails, setPriceDetails] = useState(tour?.price_details ?? '')
   const [duration, setDuration] = useState(tour?.duration ?? '')
+  const [participants, setParticipants] = useState(tour?.participants ?? '')
   const [format, setFormat] = useState(tour?.format ?? 'both')
   const [isActive, setIsActive] = useState(tour?.is_active ?? true)
   const [sortOrder, setSortOrder] = useState(tour?.sort_order?.toString() ?? '0')
@@ -45,15 +49,23 @@ export default function TourForm({ tour }: { tour?: Tour }) {
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
+  // рядок -> масив рядків (по одному пункту на рядок)
+  const toLines = (s: string) => s.split('\n').map((x) => x.trim()).filter(Boolean)
+
   // Переклади UK/EN (базові поля = RU). Порожні поля -> відкат на RU на сайті.
+  // includes/excludes тут зберігаємо як текст (по пункту на рядок).
   const initTrans = (loc: 'uk' | 'en') => ({
     title: tour?.translations?.[loc]?.title ?? '',
     summary: tour?.translations?.[loc]?.summary ?? '',
     description: tour?.translations?.[loc]?.description ?? '',
+    org_details: tour?.translations?.[loc]?.org_details ?? '',
     price_details: tour?.translations?.[loc]?.price_details ?? '',
+    participants: tour?.translations?.[loc]?.participants ?? '',
+    includes: (tour?.translations?.[loc]?.includes ?? []).join('\n'),
+    excludes: (tour?.translations?.[loc]?.excludes ?? []).join('\n'),
   })
   const [trans, setTrans] = useState({ uk: initTrans('uk'), en: initTrans('en') })
-  function setT(loc: 'uk' | 'en', field: keyof TourTranslation, value: string) {
+  function setT(loc: 'uk' | 'en', field: keyof ReturnType<typeof initTrans>, value: string) {
     setTrans((prev) => ({ ...prev, [loc]: { ...prev[loc], [field]: value } }))
   }
 
@@ -98,18 +110,28 @@ export default function TourForm({ tour }: { tour?: Tour }) {
         if (src.title.trim()) obj.title = src.title.trim()
         if (src.summary.trim()) obj.summary = src.summary.trim()
         if (src.description.trim()) obj.description = src.description.trim()
+        if (src.org_details.trim()) obj.org_details = src.org_details.trim()
         if (src.price_details.trim()) obj.price_details = src.price_details.trim()
+        if (src.participants.trim()) obj.participants = src.participants.trim()
+        const inc = toLines(src.includes)
+        if (inc.length) obj.includes = inc
+        const exc = toLines(src.excludes)
+        if (exc.length) obj.excludes = exc
         if (Object.keys(obj).length) translations[loc] = obj
       }
 
       const payload = {
         title, slug: slug || slugify(title), city: city || null,
         summary: summary || null, description: description || null,
+        org_details: orgDetails || null,
         price: price === '' ? null : Number(price),
         currency: 'USD',
         price_details: priceDetails || null,
         duration: duration || null,
+        participants: participants || null,
         format,
+        includes: toLines(includes),
+        excludes: toLines(excludes),
         cover_url: cover,
         gallery: galleryUrls,
         is_active: isActive,
@@ -147,6 +169,18 @@ export default function TourForm({ tour }: { tour?: Tour }) {
       <label style={labelStyle}>Повний опис (для сторінки туру)</label>
       <textarea style={{ ...inputStyle, minHeight: 140 }} value={description} onChange={(e) => setDescription(e.target.value)} />
 
+      <label style={labelStyle}>Організаційні деталі</label>
+      <textarea style={{ ...inputStyle, minHeight: 90 }} value={orgDetails} onChange={(e) => setOrgDetails(e.target.value)}
+        placeholder="Початок з Токіо, Хаконе або Одавари; маршрут коригується під погоду…" />
+
+      <label style={labelStyle}>Що включено (по одному пункту на рядок)</label>
+      <textarea style={{ ...inputStyle, minHeight: 90 }} value={includes} onChange={(e) => setIncludes(e.target.value)}
+        placeholder={'Ліцензований гід\nТранспорт\nВхідні квитки'} />
+
+      <label style={labelStyle}>Що оплачується окремо (по одному пункту на рядок)</label>
+      <textarea style={{ ...inputStyle, minHeight: 90 }} value={excludes} onChange={(e) => setExcludes(e.target.value)}
+        placeholder={'Харчування\nОсобисті витрати'} />
+
       <div style={{ display: 'flex', gap: 16 }}>
         <div style={{ flex: 1 }}>
           <label style={labelStyle}>Ціна від, $ (для картки)</label>
@@ -157,6 +191,9 @@ export default function TourForm({ tour }: { tour?: Tour }) {
           <input style={inputStyle} value={duration} onChange={(e) => setDuration(e.target.value)} placeholder="6–8 годин" />
         </div>
       </div>
+
+      <label style={labelStyle}>Кількість учасників</label>
+      <input style={inputStyle} value={participants} onChange={(e) => setParticipants(e.target.value)} placeholder="до 7 осіб" />
 
       <label style={labelStyle}>Деталі ціни (тарифи по групах)</label>
       <textarea style={{ ...inputStyle, minHeight: 80 }} value={priceDetails} onChange={(e) => setPriceDetails(e.target.value)}
@@ -230,6 +267,18 @@ export default function TourForm({ tour }: { tour?: Tour }) {
 
               <label style={labelStyle}>Повний опис (для сторінки туру)</label>
               <textarea style={{ ...inputStyle, minHeight: 120 }} value={trans[loc].description} onChange={(e) => setT(loc, 'description', e.target.value)} />
+
+              <label style={labelStyle}>Організаційні деталі</label>
+              <textarea style={{ ...inputStyle, minHeight: 80 }} value={trans[loc].org_details} onChange={(e) => setT(loc, 'org_details', e.target.value)} />
+
+              <label style={labelStyle}>Що включено (по пункту на рядок)</label>
+              <textarea style={{ ...inputStyle, minHeight: 80 }} value={trans[loc].includes} onChange={(e) => setT(loc, 'includes', e.target.value)} />
+
+              <label style={labelStyle}>Що оплачується окремо (по пункту на рядок)</label>
+              <textarea style={{ ...inputStyle, minHeight: 80 }} value={trans[loc].excludes} onChange={(e) => setT(loc, 'excludes', e.target.value)} />
+
+              <label style={labelStyle}>Кількість учасників</label>
+              <input style={inputStyle} value={trans[loc].participants} onChange={(e) => setT(loc, 'participants', e.target.value)} />
 
               <label style={labelStyle}>Деталі ціни</label>
               <textarea style={{ ...inputStyle, minHeight: 70 }} value={trans[loc].price_details} onChange={(e) => setT(loc, 'price_details', e.target.value)} />

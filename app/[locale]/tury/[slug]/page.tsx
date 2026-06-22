@@ -56,6 +56,7 @@ export default async function TourPage({ params }: { params: Params }) {
             <h1>{tour.title}</h1>
             <div className="tour-meta">
               {tour.duration && <span>{tour.duration}</span>}
+              {tour.participants && <span>{tour.participants}</span>}
               <span>{formatLabel[tour.format] ?? formatLabel.both}</span>
             </div>
           </div>
@@ -79,6 +80,21 @@ export default async function TourPage({ params }: { params: Params }) {
               </div>
             )}
 
+            {tour.org_details && (
+              <div className="tour-block">
+                <h3>{t('orgDetails')}</h3>
+                <div className="tour-desc">
+                  {tour.org_details
+                    .split('\n')
+                    .map((p) => p.trim())
+                    .filter(Boolean)
+                    .map((p, i) => (
+                      <p key={i}>{p}</p>
+                    ))}
+                </div>
+              </div>
+            )}
+
             {tour.includes.length > 0 && (
               <div className="tour-block">
                 <h3>{t('includes')}</h3>
@@ -86,15 +102,26 @@ export default async function TourPage({ params }: { params: Params }) {
                   {tour.includes.map((item, i) => (
                     <li key={i}>
                       <span className="ck">
-                        <svg
-                          width="13"
-                          height="13"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="3"
-                        >
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                           <path d="M5 12l5 5L20 6" />
+                        </svg>
+                      </span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {tour.excludes.length > 0 && (
+              <div className="tour-block">
+                <h3>{t('excludes')}</h3>
+                <ul className="checklist checklist-minus">
+                  {tour.excludes.map((item, i) => (
+                    <li key={i}>
+                      <span className="ck">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                          <path d="M5 12h14" />
                         </svg>
                       </span>
                       {item}

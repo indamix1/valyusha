@@ -151,6 +151,7 @@
   .tour-desc p{margin-bottom:16px;color:var(--ink-soft)}
   .tour-block{margin-top:36px}
   .tour-block h3{font-family:var(--serif);font-weight:600;font-size:24px;margin-bottom:18px}
+  .checklist-minus .ck{background:var(--paper-2);color:var(--muted)}
   .tour-aside{position:sticky;top:104px}
   .price-card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:28px;box-shadow:0 22px 42px -30px rgba(49,45,41,.4)}
   .price-big{font-family:var(--serif);font-weight:600;font-size:34px;color:var(--rose-deep);line-height:1}

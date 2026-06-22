@@ -33,7 +33,11 @@ export function localizeTour(tour: Tour, locale: Locale): Tour {
     title: t.title || tour.title,
     summary: t.summary || tour.summary,
     description: t.description || tour.description,
+    org_details: t.org_details || tour.org_details,
     price_details: t.price_details || tour.price_details,
+    participants: t.participants || tour.participants,
+    includes: t.includes && t.includes.length ? t.includes : tour.includes,
+    excludes: t.excludes && t.excludes.length ? t.excludes : tour.excludes,
   }
 }
 
