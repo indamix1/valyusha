@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
-import type { Tour } from '@/types/database'
+import type { Tour, TourTranslation } from '@/types/database'
 
 // проста транслітерація для slug (кирилиця -> латиниця)
 const translitMap: Record<string, string> = {
@@ -43,6 +43,18 @@ export default function TourForm({ tour }: { tour?: Tour }) {
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
+  // Переклади UK/EN (базові поля = RU). Порожні поля -> відкат на RU на сайті.
+  const initTrans = (loc: 'uk' | 'en') => ({
+    title: tour?.translations?.[loc]?.title ?? '',
+    summary: tour?.translations?.[loc]?.summary ?? '',
+    description: tour?.translations?.[loc]?.description ?? '',
+    price_details: tour?.translations?.[loc]?.price_details ?? '',
+  })
+  const [trans, setTrans] = useState({ uk: initTrans('uk'), en: initTrans('en') })
+  function setT(loc: 'uk' | 'en', field: keyof TourTranslation, value: string) {
+    setTrans((prev) => ({ ...prev, [loc]: { ...prev[loc], [field]: value } }))
+  }
+
   // автозаповнення slug, поки користувач не редагував його вручну
   function onTitleChange(v: string) {
     setTitle(v)
@@ -65,6 +77,18 @@ export default function TourForm({ tour }: { tour?: Tour }) {
         cover = supabase.storage.from('media').getPublicUrl(path).data.publicUrl
       }
 
+      // Збираємо переклади: лише непорожні поля; порожня мова не потрапляє в jsonb.
+      const translations: Record<string, TourTranslation> = {}
+      for (const loc of ['uk', 'en'] as const) {
+        const src = trans[loc]
+        const obj: TourTranslation = {}
+        if (src.title.trim()) obj.title = src.title.trim()
+        if (src.summary.trim()) obj.summary = src.summary.trim()
+        if (src.description.trim()) obj.description = src.description.trim()
+        if (src.price_details.trim()) obj.price_details = src.price_details.trim()
+        if (Object.keys(obj).length) translations[loc] = obj
+      }
+
       const payload = {
         title, slug: slug || slugify(title), city: city || null,
         summary: summary || null, description: description || null,
@@ -76,6 +100,7 @@ export default function TourForm({ tour }: { tour?: Tour }) {
         cover_url: cover,
         is_active: isActive,
         sort_order: Number(sortOrder) || 0,
+        translations,
       }
 
       const res = tour
@@ -148,6 +173,33 @@ export default function TourForm({ tour }: { tour?: Tour }) {
           <input type="checkbox" checked={isActive} onChange={(e) => setIsActive(e.target.checked)} />
           Показувати на сайті
         </label>
+      </div>
+
+      <div style={{ marginTop: 28, paddingTop: 20, borderTop: '1px solid rgba(49,45,41,.15)' }}>
+        <h3 style={{ fontSize: 16, fontWeight: 800, color: '#312D29', marginBottom: 4 }}>Переклади (необов&apos;язково)</h3>
+        <p style={{ fontSize: 13, color: '#8A7F75', marginBottom: 16 }}>
+          Базові поля вище — російською. Тут — українська та англійська версії.
+          Порожнє поле = на сайті покаже російський варіант.
+        </p>
+
+        {([['uk', 'Українська 🇺🇦'], ['en', 'English 🇬🇧']] as const).map(([loc, title]) => (
+          <details key={loc} style={{ marginBottom: 14, border: '1px solid rgba(49,45,41,.15)', borderRadius: 8, padding: '12px 14px' }}>
+            <summary style={{ cursor: 'pointer', fontWeight: 700, fontSize: 14, color: '#5C544C' }}>{title}</summary>
+            <div style={{ marginTop: 12 }}>
+              <label style={labelStyle}>Назва туру</label>
+              <input style={inputStyle} value={trans[loc].title} onChange={(e) => setT(loc, 'title', e.target.value)} />
+
+              <label style={labelStyle}>Короткий опис (для картки)</label>
+              <input style={inputStyle} value={trans[loc].summary} onChange={(e) => setT(loc, 'summary', e.target.value)} />
+
+              <label style={labelStyle}>Повний опис (для сторінки туру)</label>
+              <textarea style={{ ...inputStyle, minHeight: 120 }} value={trans[loc].description} onChange={(e) => setT(loc, 'description', e.target.value)} />
+
+              <label style={labelStyle}>Деталі ціни</label>
+              <textarea style={{ ...inputStyle, minHeight: 70 }} value={trans[loc].price_details} onChange={(e) => setT(loc, 'price_details', e.target.value)} />
+            </div>
+          </details>
+        ))}
       </div>
 
       {error && <p style={{ color: '#BE6273', fontSize: 14, marginTop: 8 }}>{error}</p>}
