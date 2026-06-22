@@ -32,6 +32,9 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+# secret env copies without a leading dot (must never be committed)
+env.local.txt
+*.local.txt
 
 # vercel
 .vercel

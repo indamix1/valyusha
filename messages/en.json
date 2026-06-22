@@ -1,0 +1,11 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "excursions": "Excursions",
+    "individual": "Individual tours",
+    "cruise": "For cruise guests",
+    "transfers": "Transfers",
+    "contacts": "Contacts"
+  }
+}

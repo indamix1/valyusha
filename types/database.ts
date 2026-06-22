@@ -1,0 +1,55 @@
+// types/database.ts
+// Типи під таблиці БД. Зручно для автокомпліту в компонентах.
+
+export type TourFormat = 'group' | 'individual' | 'both'
+
+export interface Tour {
+  id: string
+  slug: string
+  title: string
+  city: string | null
+  summary: string | null
+  description: string | null
+  price: number | null
+  currency: string
+  price_note: string | null
+  duration: string | null
+  format: TourFormat
+  includes: string[]
+  cover_url: string | null
+  gallery: string[]
+  sort_order: number
+  is_active: boolean
+  created_at: string
+}
+
+export interface Post {
+  id: string
+  slug: string
+  title: string
+  excerpt: string | null
+  content: string | null
+  cover_url: string | null
+  published: boolean
+  published_at: string | null
+  created_at: string
+}
+
+export interface Review {
+  id: string
+  author_name: string
+  author_city: string | null
+  avatar_url: string | null
+  rating: number
+  text: string
+  tour_id: string | null
+  is_approved: boolean
+  sort_order: number
+  created_at: string
+}
+
+export interface SiteContent {
+  key: string
+  value: string | null
+  updated_at: string
+}
