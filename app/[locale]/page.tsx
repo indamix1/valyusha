@@ -1,4 +1,6 @@
 import { getSiteContent, type Locale } from '@/lib/content'
+import { getTours, formatPrice } from '@/lib/tours'
+import { Link } from '@/i18n/navigation'
 
 export default async function Home({
   params,
@@ -7,6 +9,7 @@ export default async function Home({
 }) {
   const { locale } = await params
   const c = await getSiteContent(locale as Locale)
+  const tours = await getTours(locale as Locale)
   return (
     <>
 <section className="hero">
@@ -81,15 +84,43 @@ export default async function Home({
       <span className="eyebrow">Куди поїдемо</span>
       <h2>Популярні маршрути</h2>
     </div>
-    <div className="routes">
-      <article className="route"><div className="route-img r1"><span className="price">від $120</span></div><div className="route-body"><h3>Токіо</h3><p>Сучасний мегаполіс і традиційні квартали</p><a href="#" className="route-link">Детальніше →</a></div></article>
-      <article className="route"><div className="route-img r2"><span className="price">від $140</span></div><div className="route-body"><h3>Камакура</h3><p>Історія, храми та океан</p><a href="#" className="route-link">Детальніше →</a></div></article>
-      <article className="route"><div className="route-img r3"><span className="price">від $160</span></div><div className="route-body"><h3>Хаконе</h3><p>Гори, онсени та неймовірні краєвиди</p><a href="#" className="route-link">Детальніше →</a></div></article>
-      <article className="route"><div className="route-img r4"><span className="price">від $180</span></div><div className="route-body"><h3>Фудзі</h3><p>Символ Японії з різних ракурсів</p><a href="#" className="route-link">Детальніше →</a></div></article>
-      <article className="route"><div className="route-img r5"><span className="price">від $170</span></div><div className="route-body"><h3>Шимідзу</h3><p>Зустріч із круїзу, екскурсія з порту</p><a href="#" className="route-link">Детальніше →</a></div></article>
-      <article className="route"><div className="route-img r6"><span className="price">від $190</span></div><div className="route-body"><h3>Кіото</h3><p>Класична Японія та її душа</p><a href="#" className="route-link">Детальніше →</a></div></article>
-    </div>
-    <div className="routes-foot"><a href="#" className="btn btn-rose">Усі маршрути</a></div>
+    {tours.length === 0 ? (
+      <p className="routes-empty">Маршрути зʼявляться найближчим часом.</p>
+    ) : (
+      <div className="routes">
+        {tours.map((t, i) => {
+          const price = formatPrice(t.price, t.currency)
+          return (
+            <article className="route" key={t.id}>
+              <div
+                className={t.cover_url ? 'route-img' : `route-img r${(i % 6) + 1}`}
+                style={
+                  t.cover_url
+                    ? {
+                        backgroundImage: `url(${t.cover_url})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                      }
+                    : undefined
+                }
+              >
+                {price && <span className="price">від {price}</span>}
+              </div>
+              <div className="route-body">
+                <h3>{t.title}</h3>
+                {t.summary && <p>{t.summary}</p>}
+                <Link href={`/tury/${t.slug}`} className="route-link">
+                  Детальніше →
+                </Link>
+              </div>
+            </article>
+          )
+        })}
+      </div>
+    )}
+    {tours.length > 0 && (
+      <div className="routes-foot"><a href="#" className="btn btn-rose">Усі маршрути</a></div>
+    )}
   </div>
 </section>
 

@@ -3,6 +3,15 @@
 
 export type TourFormat = 'group' | 'individual' | 'both'
 
+// Переклади туру: базові поля = ru, тут лежать uk/en.
+// Напр. { uk: { title, summary, description }, en: {...} }
+export interface TourTranslation {
+  title?: string
+  summary?: string
+  description?: string
+  price_details?: string
+}
+
 export interface Tour {
   id: string
   slug: string
@@ -13,6 +22,7 @@ export interface Tour {
   price: number | null
   currency: string
   price_note: string | null
+  price_details: string | null
   duration: string | null
   format: TourFormat
   includes: string[]
@@ -20,6 +30,7 @@ export interface Tour {
   gallery: string[]
   sort_order: number
   is_active: boolean
+  translations: Record<string, TourTranslation>
   created_at: string
 }
 

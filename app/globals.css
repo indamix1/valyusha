@@ -94,6 +94,7 @@
   .route-link{display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--rose-deep)}
   .route-link:hover{gap:12px}
   .routes-foot{text-align:center;margin-top:42px}
+  .routes-empty{text-align:center;color:var(--muted);font-size:16px;padding:24px 0}
 
   /* about */
   .about-grid{display:grid;grid-template-columns:.92fr 1.08fr;gap:54px;align-items:center}
