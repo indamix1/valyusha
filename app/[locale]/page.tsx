@@ -84,22 +84,22 @@ export default async function Home({
       <h2>{t('cats.title')}</h2>
     </div>
     <div className="cats">
-      <div className="cat">
+      <Link href="/ekskursii" className="cat">
         <span className="c-ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M3 21h18M5 21V9l7-5 7 5v12M9 21v-6h6v6"/></svg></span>
         <h3>{t('cats.excursions_t')}</h3><p>{t('cats.excursions_d')}</p>
-      </div>
-      <div className="cat">
+      </Link>
+      <Link href="/individualni" className="cat">
         <span className="c-ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg></span>
         <h3>{t('cats.individual_t')}</h3><p>{t('cats.individual_d')}</p>
-      </div>
-      <div className="cat">
+      </Link>
+      <Link href="/kruizni" className="cat">
         <span className="c-ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M2 16l2-5h16l2 5M4 16c2 2 4 2 6 0s4-2 6 0 4 2 4 0M12 3v8M9 6h6"/></svg></span>
         <h3>{t('cats.cruise_t')}</h3><p>{t('cats.cruise_d')}</p>
-      </div>
-      <div className="cat">
+      </Link>
+      <Link href="/transferi" className="cat">
         <span className="c-ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M5 17a2 2 0 1 0 0-.1M17 17a2 2 0 1 0 0-.1M3 17V8l2-4h10l3 4h2a1 1 0 0 1 1 1v8h-2M7 17h8"/></svg></span>
         <h3>{t('cats.transfers_t')}</h3><p>{t('cats.transfers_d')}</p>
-      </div>
+      </Link>
     </div>
   </div>
 </section>
@@ -206,98 +206,36 @@ export default async function Home({
   </div>
 </section>
 
-<section className="sec reveal" id="about">
+<section className="sec about-sec reveal" id="about">
   <div className="wrap">
-    <div className="about-grid about">
-      <div className="about-photo"></div>
+    <div className="about-grid">
       <div>
         <span className="eyebrow">{t('about.eyebrow')}</span>
-        <h2 style={{ marginTop: '12px' }}>{c.about_title}</h2>
+        <h2 className="about-heading">{c.about_title}</h2>
         <ul className="checklist">
           <li><span className="ck"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M5 12l5 5L20 6"/></svg></span>{t('about.point1')}</li>
           <li><span className="ck"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M5 12l5 5L20 6"/></svg></span>{t('about.point2')}</li>
           <li><span className="ck"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M5 12l5 5L20 6"/></svg></span>{t('about.point3')}</li>
           <li><span className="ck"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M5 12l5 5L20 6"/></svg></span>{t('about.point4')}</li>
         </ul>
-        <a href="#foot" className="btn btn-dark">{t('about.cta')}</a>
-
-        <div className="map-card">
-          <h4>{t('about.mapTitle')}</h4>
-          <div className="map-wrap">
-            <svg className="jp-map" viewBox="100 10 420 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Карта Японії з маршрутами">
-              <defs>
-                <filter id="paper-tex">
-                  <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" result="noise"/>
-                  <feDiffuseLighting in="noise" lightingColor="#F5E6D8" surfaceScale="1.2" result="light"><feDistantLight azimuth="45" elevation="55"/></feDiffuseLighting>
-                  <feComposite in="SourceGraphic" in2="light" operator="arithmetic" k1="0.8" k2="0.3" k3="0" k4="0"/>
-                </filter>
-                <filter id="glow"><feGaussianBlur stdDeviation="2.5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-                <radialGradient id="land-g" cx="50%" cy="40%" r="60%"><stop offset="0%" stopColor="#F2DDD2"/><stop offset="100%" stopColor="#E8CCBF"/></radialGradient>
-              </defs>
-
-              {/* Тёплый фон */}
-              <rect width="580" height="680" fill="#FAF3ED" rx="14"/>
-
-              {/* Хоккайдо */}
-              <path d="M385 62 C370 42 395 18 420 28 C445 38 465 55 458 78 C452 98 435 115 415 118 C395 120 378 108 370 92 C365 80 372 68 385 62Z" fill="url(#land-g)" stroke="#C9A08A" strokeWidth="1.2" filter="url(#paper-tex)" className="map-island"/>
-              {/* Хонсю — более детальный контур */}
-              <path d="M190 365 C178 345 170 318 178 298 C186 278 200 282 210 268 C218 255 215 238 222 222 C230 206 248 198 260 185 C270 174 268 158 282 148 C296 138 315 142 330 135 C345 128 355 112 372 108 C388 104 405 115 418 125 C428 132 435 148 430 165 C425 180 410 188 398 200 C388 212 392 228 385 245 C378 262 358 268 348 282 C338 296 345 318 335 335 C325 348 308 345 295 358 C282 370 275 392 262 398 C248 405 235 388 225 375 C215 362 200 378 190 365Z" fill="url(#land-g)" stroke="#C9A08A" strokeWidth="1.2" filter="url(#paper-tex)" className="map-island"/>
-              {/* Сикоку */}
-              <path d="M200 380 C215 365 242 360 258 372 C270 382 265 400 252 410 C238 418 215 415 202 402 C192 392 192 385 200 380Z" fill="url(#land-g)" stroke="#C9A08A" strokeWidth="1.2" filter="url(#paper-tex)" className="map-island"/>
-              {/* Кюсю */}
-              <path d="M148 375 C162 358 188 355 200 370 C210 382 205 402 192 412 C180 422 160 425 148 415 C136 405 138 388 148 375Z" fill="url(#land-g)" stroke="#C9A08A" strokeWidth="1.2" filter="url(#paper-tex)" className="map-island"/>
-
-              {/* Декор: иероглифы 日本 */}
-              <text x="485" y="580" fill="#D4B5A0" opacity="0.25" fontSize="72" fontFamily="serif" fontWeight="700">日本</text>
-
-              {/* Декор: сакура — лепестки */}
-              <g opacity="0.3" fill="#E8A0B0">
-                <circle cx="120" cy="80" r="5"/><circle cx="115" cy="72" r="4"/><circle cx="127" cy="74" r="4"/>
-                <circle cx="460" cy="450" r="5"/><circle cx="455" cy="442" r="4"/><circle cx="467" cy="444" r="4"/>
-                <circle cx="80" cy="520" r="4"/><circle cx="76" cy="513" r="3.5"/><circle cx="86" cy="515" r="3.5"/>
-                <circle cx="500" cy="180" r="4"/><circle cx="496" cy="173" r="3.5"/><circle cx="506" cy="175" r="3.5"/>
-              </g>
-
-              {/* Маршрутная линия */}
-              <path d="M235 298 L295 250 L330 232 L360 218 L385 195 L400 168" fill="none" stroke="#BE6273" strokeWidth="2" strokeDasharray="6 5" opacity="0.45" className="map-route"/>
-
-              {/* Города */}
-              <g fontFamily="var(--sans)" fontSize="12.5" fontWeight="600">
-                {/* Токио */}
-                <circle cx="400" cy="168" r="7" fill="#BE6273" className="map-dot map-dot-1" filter="url(#glow)"/>
-                <circle cx="400" cy="168" r="7" fill="transparent" stroke="#BE6273" strokeWidth="2" opacity="0.4" className="map-pulse map-pulse-1"/>
-                <text x="412" y="165" fill="#5C544C" fontSize="14" fontWeight="700">{locale === 'en' ? 'Tokyo' : locale === 'uk' ? 'Токіо' : 'Токио'}</text>
-
-                {/* Никко */}
-                <circle cx="408" cy="138" r="5.5" fill="#BE6273" className="map-dot map-dot-7"/>
-                <text x="420" y="136" fill="#6B5E55" fontSize="11">{locale === 'en' ? 'Nikko' : locale === 'uk' ? 'Нікко' : 'Никко'}</text>
-
-                {/* Камакура */}
-                <circle cx="395" cy="192" r="5" fill="#C97F5D" className="map-dot map-dot-2"/>
-                <text x="405" y="196" fill="#8A7F75" fontSize="11">{locale === 'en' ? 'Kamakura' : 'Камакура'}</text>
-
-                {/* Хаконе */}
-                <circle cx="372" cy="205" r="5" fill="#C97F5D" className="map-dot map-dot-3"/>
-                <text x="382" y="215" fill="#8A7F75" fontSize="11">{locale === 'en' ? 'Hakone' : locale === 'uk' ? 'Хаконе' : 'Хаконе'}</text>
-
-                {/* Одавара */}
-                <circle cx="378" cy="225" r="5" fill="#C97F5D" className="map-dot map-dot-5"/>
-                <text x="388" y="232" fill="#8A7F75" fontSize="11">{locale === 'en' ? 'Odawara' : locale === 'uk' ? 'Одавара' : 'Одавара'}</text>
-
-                {/* Фудзи */}
-                <circle cx="355" cy="218" r="6" fill="#BE6273" className="map-dot map-dot-4"/>
-                <text x="302" y="222" fill="#6B5E55" fontSize="12">{locale === 'en' ? 'Mt. Fuji' : locale === 'uk' ? 'Фудзі' : 'Фудзи'} ▲</text>
-
-                {/* Идзу */}
-                <circle cx="348" cy="278" r="5" fill="#C97F5D" className="map-dot map-dot-6"/>
-                <text x="358" y="282" fill="#8A7F75" fontSize="11">{locale === 'en' ? 'Izu' : locale === 'uk' ? 'Ідзу' : 'Идзу'}</text>
-
-                {/* Киото */}
-                <circle cx="255" cy="282" r="6" fill="#BE6273" className="map-dot map-dot-8"/>
-                <text x="215" y="278" fill="#6B5E55" fontSize="12">{locale === 'en' ? 'Kyoto' : locale === 'uk' ? 'Кіото' : 'Киото'}</text>
-              </g>
-            </svg>
-          </div>
+        <Link href="/pro-mene" className="btn btn-dark">{t('about.cta')}</Link>
+      </div>
+      <div className="about-stats">
+        <div className="stat">
+          <span className="stat-num">20+</span>
+          <span className="stat-label">{t('about.stat1')}</span>
+        </div>
+        <div className="stat">
+          <span className="stat-num">8</span>
+          <span className="stat-label">{t('about.stat2')}</span>
+        </div>
+        <div className="stat">
+          <span className="stat-num">500+</span>
+          <span className="stat-label">{t('about.stat3')}</span>
+        </div>
+        <div className="stat">
+          <span className="stat-num">3</span>
+          <span className="stat-label">{t('about.stat4')}</span>
         </div>
       </div>
     </div>
