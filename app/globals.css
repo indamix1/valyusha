@@ -202,6 +202,12 @@
   .tour-grid{display:grid;grid-template-columns:1.7fr .9fr;gap:48px;align-items:start}
   .tour-lead{font-size:20px;color:var(--ink-soft);line-height:1.5;margin-bottom:24px}
   .tour-desc p{margin-bottom:16px;color:var(--ink-soft)}
+  .tour-stops{display:flex;flex-direction:column;gap:40px}
+  .tour-stop{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center}
+  .tour-stop-rev{direction:rtl}
+  .tour-stop-rev>*{direction:ltr}
+  .tour-stop-img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:16px;display:block}
+  .tour-stop-text p{margin-bottom:12px;color:var(--ink-soft);line-height:1.6}
   .tour-block{margin-top:36px}
   .tour-block h3{font-family:var(--serif);font-weight:600;font-size:24px;margin-bottom:18px}
   .checklist-minus .ck{background:var(--paper-2);color:var(--muted)}
@@ -260,6 +266,8 @@
     .about-grid{grid-template-columns:1fr;gap:32px}
     .tour-grid{grid-template-columns:1fr;gap:32px}
     .tour-aside{position:static}
+    .tour-stop{grid-template-columns:1fr}
+    .tour-stop-rev{direction:ltr}
     .gallery{grid-template-columns:1fr 1fr}
     .blog-grid{grid-template-columns:1fr 1fr}
     .reviews{grid-template-columns:1fr}
