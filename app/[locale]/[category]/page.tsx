@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getTranslations } from 'next-intl/server'
 import { getSiteContent, type Locale } from '@/lib/content'
+import BackLink from '@/components/BackLink'
 
 // Білий список категорій = пунктам меню (поза цим списком -> 404).
 const CATEGORIES = [
@@ -38,6 +39,7 @@ export default async function CategoryPage({ params }: { params: Params }) {
   const t = await getTranslations('categories')
   const cc = await getTranslations('category')
   const b = await getTranslations('brand')
+  const nav = await getTranslations('nav')
   const body = t.raw(`${category}.body`) as string[]
 
   const c = await getSiteContent(locale as Locale)
@@ -48,6 +50,9 @@ export default async function CategoryPage({ params }: { params: Params }) {
 
   return (
     <>
+      {(['ekskursii', 'individualni', 'kruizni', 'transferi'] as string[]).includes(category) && (
+        <BackLink href="/#formats" label={nav('backToFormats')} />
+      )}
       <section className="page-head">
         <div className="wrap">
           <span className="eyebrow">{b('sub')}</span>

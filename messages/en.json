@@ -7,7 +7,8 @@
     "cruise": "For cruise guests",
     "transfers": "Transfers",
     "blog": "Blog",
-    "contacts": "Contacts"
+    "contacts": "Contacts",
+    "backToFormats": "Back to formats"
   },
   "blog": {
     "eyebrow": "Notes on Japan",
@@ -66,7 +67,9 @@
     "desc2": "Pick a city or region — and write to me. Let's plan the perfect journey together!",
     "cta": "Discuss your route",
     "citiesTitle": "Cities & regions",
-    "cities": "Tokyo, Odawara, Kamakura, Hakone, Mt. Fuji, Izu, Nikko, Kyoto, Osaka, Nara, Kobe, Hiroshima"
+    "cities": "Tokyo, Kamakura, Hakone, Mt. Fuji, Nikko, Odawara, Yokohama, Izu, Nagano, Kanazawa, Toyama, Shirakawa-go, Takayama, Kyoto, Nara, Osaka, Kobe, Hiroshima, Miyajima, Fukuoka, Nagasaki, Kumamoto, Beppu, Okinawa, Hokkaido",
+    "specialTitle": "Special itineraries",
+    "specials": "Cherry blossom tours, Autumn momiji tours, Onsen journeys, Photo tours, Japanese Alps, Traditional villages, Cruise excursions, Food tour"
   },
   "bonuses": {
     "eyebrow": "Special experiences",
@@ -137,7 +140,7 @@
     "contactTitle": "Get in touch",
     "ctaTagline": "Japan is waiting for you!",
     "whatsapp": "Message on WhatsApp",
-    "copyright": "© 2026 Valyusha · Guide in Japan",
+    "copyright": "© 2026 Valentyna Japan Guide",
     "rights": "All rights reserved"
   },
   "category": {

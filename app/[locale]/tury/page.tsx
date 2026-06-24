@@ -3,6 +3,7 @@ import { getTranslations } from 'next-intl/server'
 import { getTours } from '@/lib/tours'
 import type { Locale } from '@/lib/content'
 import TourGrid from '@/components/TourGrid'
+import BackLink from '@/components/BackLink'
 
 type Params = Promise<{ locale: string }>
 
@@ -20,9 +21,11 @@ export default async function ToursPage({ params }: { params: Params }) {
   const tours = await getTours(locale as Locale)
   const t = await getTranslations('toursPage')
   const rt = await getTranslations('routes')
+  const nav = await getTranslations('nav')
 
   return (
     <>
+      <BackLink href="/#formats" label={nav('backToFormats')} />
       <section className="page-head">
         <div className="wrap">
           <span className="eyebrow">{t('eyebrow')}</span>

@@ -34,11 +34,15 @@ export default function Header() {
   }
 
   return (
-    <header>
+    <header className={open ? 'header-menu-open' : ''}>
       <div className="wrap nav">
         <Link href="/" className="brand" onClick={() => setOpen(false)}>
-          <span className="name">Valyusha</span>
-          <span className="sub">{b('sub')}</span>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo.png" alt="" className="brand-logo" />
+          <div>
+            <span className="name">Valentyna</span>
+            <span className="sub">Japan Guide</span>
+          </div>
         </Link>
 
         <nav className={open ? 'nav-links open' : 'nav-links'}>
@@ -79,41 +83,6 @@ export default function Header() {
         </button>
       </div>
 
-      <style jsx>{`
-        .lang-btn {
-          background: none;
-          border: none;
-          cursor: pointer;
-          font: inherit;
-          font-weight: 700;
-          color: var(--muted);
-          padding: 2px 3px;
-        }
-        .lang-btn.active {
-          color: var(--ink);
-        }
-        .lang-sep {
-          color: var(--muted);
-        }
-        @media (max-width: 980px) {
-          .nav-links {
-            display: none;
-          }
-          .nav-links.open {
-            display: flex;
-            position: absolute;
-            top: 80px;
-            left: 0;
-            right: 0;
-            flex-direction: column;
-            background: var(--paper);
-            padding: 22px 32px;
-            border-bottom: 1px solid var(--line);
-            gap: 18px;
-            z-index: 60;
-          }
-        }
-      `}</style>
     </header>
   )
 }

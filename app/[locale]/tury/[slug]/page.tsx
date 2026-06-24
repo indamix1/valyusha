@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getTranslations } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
+import BackLink from '@/components/BackLink'
 import { getTour, formatPrice } from '@/lib/tours'
 import { getSiteContent, type Locale } from '@/lib/content'
 import type { TourFormat } from '@/types/database'
@@ -39,6 +40,7 @@ export default async function TourPage({ params }: { params: Params }) {
 
   return (
     <article className="tour-page">
+      <BackLink href="/#routes" label={t('back')} />
       <div
         className={tour.cover_url ? 'tour-hero' : 'tour-hero tour-hero-fallback'}
         style={
@@ -48,9 +50,6 @@ export default async function TourPage({ params }: { params: Params }) {
         }
       >
         <div className="wrap">
-          <Link href="/#routes" className="tour-back">
-            ← {t('back')}
-          </Link>
           <div className="tour-hero-inner">
             {tour.city && <span className="eyebrow">{tour.city}</span>}
             <h1>{tour.title}</h1>
@@ -69,31 +68,35 @@ export default async function TourPage({ params }: { params: Params }) {
             {tour.summary && <p className="tour-lead">{tour.summary}</p>}
 
             {tour.description && (() => {
-              const blocks = tour.description.split('---').map(b => b.trim()).filter(Boolean)
-              if (blocks.length > 1 && tour.gallery.length > 0) {
-                return (
-                  <div className="tour-stops">
-                    {blocks.map((block, i) => (
-                      <div key={i} className={`tour-stop ${i % 2 === 1 ? 'tour-stop-rev' : ''}`}>
-                        {tour.gallery[i] && (
-                          // eslint-disable-next-line @next/next/no-img-element
-                          <img src={tour.gallery[i]} alt={`${tour.title} — ${i + 1}`} className="tour-stop-img" />
+              const blocks = tour.description
+                .split(/\n\s*\n/)
+                .map((b) => b.trim())
+                .filter(Boolean)
+              const photos = tour.gallery
+              return (
+                <div className="tour-story">
+                  {blocks.map((block, i) => {
+                    const photo = photos[i]
+                    const flip = i % 2 !== 0
+                    return (
+                      <div
+                        className={`story-row${flip ? ' story-row-flip' : ''}${!photo ? ' story-row-full' : ''}`}
+                        key={i}
+                      >
+                        {photo && (
+                          <div className="story-img">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img src={photo} alt={`${tour.title} — ${i + 1}`} />
+                          </div>
                         )}
-                        <div className="tour-stop-text">
-                          {block.split('\n').map(p => p.trim()).filter(Boolean).map((p, j) => (
+                        <div className="story-text">
+                          {block.split('\n').map((p) => p.trim()).filter(Boolean).map((p, j) => (
                             <p key={j}>{p}</p>
                           ))}
                         </div>
                       </div>
-                    ))}
-                  </div>
-                )
-              }
-              return (
-                <div className="tour-desc">
-                  {blocks[0].split('\n').map(p => p.trim()).filter(Boolean).map((p, i) => (
-                    <p key={i}>{p}</p>
-                  ))}
+                    )
+                  })}
                 </div>
               )
             })()}
@@ -195,10 +198,10 @@ export default async function TourPage({ params }: { params: Params }) {
       </section>
 
       {(() => {
-        const stopCount = tour.description?.includes('---')
-          ? tour.description.split('---').filter(b => b.trim()).length
+        const blockCount = tour.description
+          ? tour.description.split(/\n\s*\n/).map((b) => b.trim()).filter(Boolean).length
           : 0
-        const remaining = tour.gallery.slice(stopCount)
+        const remaining = tour.gallery.slice(blockCount)
         if (remaining.length === 0) return null
         return (
           <section className="sec gallery-sec">
@@ -210,7 +213,7 @@ export default async function TourPage({ params }: { params: Params }) {
               <div className="gallery">
                 {remaining.map((src, i) => (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img key={i} src={src} alt={`${tour.title} — фото ${stopCount + i + 1}`} />
+                  <img key={i} src={src} alt={`${tour.title} — фото ${blockCount + i + 1}`} />
                 ))}
               </div>
             </div>
