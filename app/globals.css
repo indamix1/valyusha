@@ -268,8 +268,8 @@
   .tour-meta{display:flex;flex-wrap:wrap;gap:10px}
   .tour-meta span{background:rgba(255,255,255,.18);backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,.25);border-radius:30px;padding:7px 16px;font-size:14px;font-weight:600}
   .tour-grid{display:grid;grid-template-columns:1.7fr .9fr;gap:48px;align-items:start}
-  .tour-lead{font-size:20px;color:var(--ink-soft);line-height:1.5;margin-bottom:24px}
-  .tour-desc p{margin-bottom:16px;color:var(--ink-soft)}
+  .tour-lead{font-size:20px;color:var(--ink);line-height:1.5;margin-bottom:24px}
+  .tour-desc p{margin-bottom:16px;color:var(--muted)}
   .tour-story{display:flex;flex-direction:column;gap:40px}
   .story-row{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center}
   .story-row-flip .story-img{order:2}
@@ -277,21 +277,40 @@
   .story-row-full{grid-template-columns:1fr}
   .story-img{border-radius:14px;overflow:hidden}
   .story-img img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
-  .story-text p{margin-bottom:14px;color:var(--ink-soft);line-height:1.6;font-size:15.5px}
+  .story-img-ph{width:100%;aspect-ratio:4/3;border-radius:14px;border:1px solid var(--line);background:var(--paper-2);display:flex;align-items:center;justify-content:center}
+  .story-img-ph::after{content:'';width:42px;height:42px;border-radius:50%;border:2px solid var(--muted);opacity:.35}
+  .story-text h3{font-family:var(--serif);font-weight:600;font-size:22px;color:var(--ink);margin-bottom:10px;line-height:1.2}
+  .story-text p{margin-bottom:14px;color:var(--muted);line-height:1.6;font-size:15.5px}
   .story-text p:last-child{margin-bottom:0}
+  /* day timeline (программа дня) */
+  .day-timeline{list-style:none;margin:0;padding:0}
+  .day-step{position:relative;display:grid;grid-template-columns:40px 1fr;gap:18px;padding-bottom:34px}
+  .day-step:last-child{padding-bottom:0}
+  .day-step:not(:last-child)::before{content:'';position:absolute;left:19px;top:48px;bottom:-4px;width:2px;background:color-mix(in srgb,var(--rose) 25%,transparent)}
+  .day-badge{width:40px;height:40px;border-radius:50%;background:var(--rose);color:#FAF1EC;display:grid;place-items:center;font-family:var(--serif);font-weight:600;font-size:18px;flex:none;position:relative;z-index:1}
+  .day-content{display:flex;gap:18px;align-items:flex-start;padding-top:2px}
+  .day-thumb{width:118px;height:80px;border-radius:10px;overflow:hidden;flex:none}
+  .day-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+  .day-thumb-ph{width:100%;height:100%;border:1px solid var(--line);border-radius:10px;background:var(--paper-2)}
+  .day-body{flex:1;min-width:0}
+  .day-body h3{font-family:var(--serif);font-weight:600;font-size:20px;color:var(--ink);margin-bottom:6px;line-height:1.2}
+  .day-body p{margin-bottom:10px;color:var(--muted);line-height:1.6;font-size:15px}
+  .day-body p:last-child{margin-bottom:0}
   .tour-block{margin-top:36px}
   .tour-block h3{font-family:var(--serif);font-weight:600;font-size:24px;margin-bottom:18px}
   .checklist-minus .ck{background:var(--paper-2);color:var(--muted)}
   .tour-aside{position:sticky;top:104px}
-  .price-card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:28px;box-shadow:0 22px 42px -30px rgba(49,45,41,.4)}
-  .price-big{font-family:var(--serif);font-weight:600;font-size:34px;color:var(--rose-deep);line-height:1}
+  .price-card{background:var(--paper-2);border:1px solid var(--line);border-radius:18px;padding:28px;box-shadow:0 22px 42px -30px rgba(49,45,41,.4)}
+  .price-big{font-family:var(--serif);font-weight:600;font-size:34px;color:var(--rose);line-height:1}
   .price-note{font-size:14px;color:var(--muted);margin-top:6px}
   .price-details{white-space:pre-line;font-size:14px;color:var(--ink-soft);line-height:1.5;margin:18px 0;padding-top:16px;border-top:1px solid var(--line)}
   .price-card .btn{width:100%;justify-content:center;margin-top:18px}
+  .price-card .btn-rose{color:var(--ink)}
+  .price-card .btn-rose:hover{background:var(--rose);color:var(--ink)}
   .price-hint{font-size:12.5px;color:var(--muted);text-align:center;margin-top:10px}
   .pay-divider{border-top:1px solid var(--line);margin:18px 0 4px}
-  .btn-paypal{background:#0070ba;color:#fff;border:none}
-  .btn-paypal:hover{background:#005ea6}
+  .btn-paypal{background:var(--ink);color:#FAF1EC;border:none}
+  .btn-paypal:hover{background:var(--ink)}
   .gallery-sec{background:var(--paper-2)}
   .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
   .gallery img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px;display:block}
@@ -465,6 +484,11 @@
     .tour-lead{font-size:17px}
     .tour-story{gap:28px}
     .story-text p{font-size:14.5px}
+    .day-step{grid-template-columns:34px 1fr;gap:12px}
+    .day-step:not(:last-child)::before{left:16px;top:42px}
+    .day-badge{width:34px;height:34px;font-size:16px}
+    .day-content{flex-direction:column;gap:12px}
+    .day-thumb{width:100%;height:auto;aspect-ratio:16/10}
     .price-card{padding:22px}
     .price-big{font-size:28px}
     .gallery{grid-template-columns:1fr}

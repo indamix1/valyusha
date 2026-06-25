@@ -5,6 +5,7 @@ import { Link } from '@/i18n/navigation'
 import BackLink from '@/components/BackLink'
 import Gallery from '@/components/Gallery'
 import { getTour, formatPrice } from '@/lib/tours'
+import { getPexelsImage } from '@/lib/pexels'
 import { getSiteContent, type Locale } from '@/lib/content'
 import type { TourFormat } from '@/types/database'
 
@@ -39,6 +40,14 @@ export default async function TourPage({ params }: { params: Params }) {
     both: t('format_both'),
   }
 
+  // Точки маршрута: image_url -> Pexels(image_query|title) -> заглушка (null).
+  const stops = tour.stops ?? []
+  const stopImages = await Promise.all(
+    stops.map((s) =>
+      s.image_url ? Promise.resolve(s.image_url) : getPexelsImage(s.image_query || s.title)
+    )
+  )
+
   return (
     <article className="tour-page">
       <BackLink href="/#routes" label={t('back')} />
@@ -68,7 +77,36 @@ export default async function TourPage({ params }: { params: Params }) {
           <div className="tour-main">
             {tour.summary && <p className="tour-lead">{tour.summary}</p>}
 
-            {tour.description && (() => {
+            {stops.length > 0 && (
+              <ol className="day-timeline">
+                {stops.map((s, i) => {
+                  const img = stopImages[i]
+                  return (
+                    <li className="day-step" key={i}>
+                      <span className="day-badge">{i + 1}</span>
+                      <div className="day-content">
+                        <div className="day-thumb">
+                          {img ? (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img src={img} alt={s.title || `${tour.title} — ${i + 1}`} />
+                          ) : (
+                            <div className="day-thumb-ph" aria-hidden="true" />
+                          )}
+                        </div>
+                        <div className="day-body">
+                          {s.title && <h3>{s.title}</h3>}
+                          {s.text.split('\n').map((p) => p.trim()).filter(Boolean).map((p, j) => (
+                            <p key={j}>{p}</p>
+                          ))}
+                        </div>
+                      </div>
+                    </li>
+                  )
+                })}
+              </ol>
+            )}
+
+            {stops.length === 0 && tour.description && (() => {
               const blocks = tour.description
                 .split(/\n\s*\n/)
                 .map((b) => b.trim())
@@ -199,9 +237,12 @@ export default async function TourPage({ params }: { params: Params }) {
       </section>
 
       {(() => {
-        const blockCount = tour.description
-          ? tour.description.split(/\n\s*\n/).map((b) => b.trim()).filter(Boolean).length
-          : 0
+        // Со stops фото галереи не «разбираются» по блокам описания — показываем все.
+        const blockCount = stops.length > 0
+          ? 0
+          : tour.description
+            ? tour.description.split(/\n\s*\n/).map((b) => b.trim()).filter(Boolean).length
+            : 0
         const remaining = tour.gallery.slice(blockCount)
         if (remaining.length === 0) return null
         return (

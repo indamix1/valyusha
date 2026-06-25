@@ -3,6 +3,14 @@
 
 export type TourFormat = 'group' | 'individual' | 'both'
 
+// Точка маршрута тура (для разворота экскурсии: фото + текст).
+export interface TourStop {
+  title: string
+  text: string
+  image_url?: string
+  image_query?: string
+}
+
 // Переклади туру: базові поля = ru, тут лежать uk/en.
 // Напр. { uk: { title, summary, description }, en: {...} }
 export interface TourTranslation {
@@ -33,6 +41,7 @@ export interface Tour {
   format: TourFormat
   category: string | null
   seasons: string[]
+  stops: TourStop[]
   includes: string[]
   excludes: string[]
   cover_url: string | null

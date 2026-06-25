@@ -3,7 +3,16 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
-import type { Tour, TourTranslation } from '@/types/database'
+import type { Tour, TourTranslation, TourStop } from '@/types/database'
+
+// точка маршруту у формі (file — нове фото для завантаження)
+interface StopForm {
+  title: string
+  text: string
+  image_url: string
+  image_query: string
+  file: File | null
+}
 
 // проста транслітерація для slug (кирилиця -> латиниця)
 const translitMap: Record<string, string> = {
@@ -47,11 +56,28 @@ export default function TourForm({ tour }: { tour?: Tour }) {
   const [file, setFile] = useState<File | null>(null)
   const [gallery, setGallery] = useState<string[]>(tour?.gallery ?? [])
   const [galleryFiles, setGalleryFiles] = useState<File[]>([])
+  const [stops, setStops] = useState<StopForm[]>(
+    (tour?.stops ?? []).map((s) => ({
+      title: s.title ?? '', text: s.text ?? '',
+      image_url: s.image_url ?? '', image_query: s.image_query ?? '', file: null,
+    }))
+  )
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   // рядок -> масив рядків (по одному пункту на рядок)
   const toLines = (s: string) => s.split('\n').map((x) => x.trim()).filter(Boolean)
+
+  // --- точки маршруту ---
+  function addStop() {
+    setStops((prev) => [...prev, { title: '', text: '', image_url: '', image_query: '', file: null }])
+  }
+  function removeStop(idx: number) {
+    setStops((prev) => prev.filter((_, i) => i !== idx))
+  }
+  function setStop(idx: number, field: keyof StopForm, value: string | File | null) {
+    setStops((prev) => prev.map((s, i) => (i === idx ? { ...s, [field]: value } : s)))
+  }
 
   // Переклади UK/EN (базові поля = RU). Порожні поля -> відкат на RU на сайті.
   // includes/excludes тут зберігаємо як текст (по пункту на рядок).
@@ -103,6 +129,25 @@ export default function TourForm({ tour }: { tour?: Tour }) {
         galleryUrls.push(supabase.storage.from('media').getPublicUrl(path).data.publicUrl)
       }
 
+      // завантаження фото точок маршруту + збірка масиву stops
+      const stopsPayload: TourStop[] = []
+      for (let i = 0; i < stops.length; i++) {
+        const s = stops[i]
+        if (!s.title.trim() && !s.text.trim()) continue
+        let imageUrl = s.image_url || ''
+        if (s.file) {
+          const safeName = s.file.name.replace(/[^a-zA-Z0-9.]/g, '_')
+          const path = `tours/stops/${Date.now()}-${i}-${safeName}`
+          const { error: upErr } = await supabase.storage.from('media').upload(path, s.file)
+          if (upErr) throw upErr
+          imageUrl = supabase.storage.from('media').getPublicUrl(path).data.publicUrl
+        }
+        const stop: TourStop = { title: s.title.trim(), text: s.text.trim() }
+        if (imageUrl) stop.image_url = imageUrl
+        if (s.image_query.trim()) stop.image_query = s.image_query.trim()
+        stopsPayload.push(stop)
+      }
+
       // Збираємо переклади: лише непорожні поля; порожня мова не потрапляє в jsonb.
       const translations: Record<string, TourTranslation> = {}
       for (const loc of ['uk', 'en'] as const) {
@@ -136,6 +181,7 @@ export default function TourForm({ tour }: { tour?: Tour }) {
         excludes: toLines(excludes),
         cover_url: cover,
         gallery: galleryUrls,
+        stops: stopsPayload,
         is_active: isActive,
         sort_order: Number(sortOrder) || 0,
         translations,
@@ -250,7 +296,50 @@ export default function TourForm({ tour }: { tour?: Tour }) {
       )}
       <input style={{ ...inputStyle, padding: 8 }} type="file" accept="image/*" multiple onChange={(e) => setGalleryFiles(Array.from(e.target.files ?? []))} />
 
-      <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
+      <div style={{ marginTop: 24, paddingTop: 20, borderTop: '1px solid rgba(49,45,41,.15)' }}>
+        <h3 style={{ fontSize: 16, fontWeight: 800, color: '#312D29', marginBottom: 4 }}>Точки маршруту</h3>
+        <p style={{ fontSize: 13, color: '#8A7F75', marginBottom: 16 }}>
+          Кожна точка = фото + текст на сторінці туру (чергуються ліворуч/праворуч).
+          Якщо фото не завантажено — підставимо зі стоку за «ключем для фото» (англ.) або заглушку.
+        </p>
+
+        {stops.map((s, i) => (
+          <div key={i} style={{ border: '1px solid rgba(49,45,41,.15)', borderRadius: 10, padding: 14, marginBottom: 14 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+              <strong style={{ fontSize: 14, color: '#5C544C' }}>Точка {i + 1}</strong>
+              <button type="button" onClick={() => removeStop(i)}
+                style={{ border: 'none', background: 'transparent', color: '#BE6273', cursor: 'pointer', fontSize: 14 }}>
+                Видалити
+              </button>
+            </div>
+
+            <label style={labelStyle}>Заголовок</label>
+            <input style={inputStyle} value={s.title} onChange={(e) => setStop(i, 'title', e.target.value)} placeholder="Нихондайра" />
+
+            <label style={labelStyle}>Текст</label>
+            <textarea style={{ ...inputStyle, minHeight: 90 }} value={s.text} onChange={(e) => setStop(i, 'text', e.target.value)} />
+
+            {s.image_url && !s.file && (
+              <div style={{ marginTop: 6, marginBottom: 8 }}>
+                {/* поточне фото точки */}
+                <img src={s.image_url} alt="" style={{ width: 140, height: 100, objectFit: 'cover', borderRadius: 8, display: 'block' }} />
+              </div>
+            )}
+            <label style={labelStyle}>Фото точки</label>
+            <input style={{ ...inputStyle, padding: 8 }} type="file" accept="image/*" onChange={(e) => setStop(i, 'file', e.target.files?.[0] ?? null)} />
+
+            <label style={labelStyle}>Ключ для авто-фото (англ., необов&apos;язково)</label>
+            <input style={inputStyle} value={s.image_query} onChange={(e) => setStop(i, 'image_query', e.target.value)} placeholder="Nihondaira Mount Fuji" />
+          </div>
+        ))}
+
+        <button type="button" onClick={addStop}
+          style={{ padding: '9px 18px', borderRadius: 20, border: '1px dashed rgba(49,45,41,.35)', background: 'transparent', cursor: 'pointer', fontSize: 14, color: '#5C544C' }}>
+          + Додати точку
+        </button>
+      </div>
+
+      <div style={{ display: 'flex', gap: 16, alignItems: 'center', marginTop: 24 }}>
         <div style={{ flex: 1 }}>
           <label style={labelStyle}>Порядок (менше = вище)</label>
           <input style={inputStyle} type="number" value={sortOrder} onChange={(e) => setSortOrder(e.target.value)} />

@@ -13,6 +13,7 @@ export function localizeTour(tour: Tour, locale: Locale): Tour {
     seasons: tour.seasons ?? [],
     includes: tour.includes ?? [],
     excludes: tour.excludes ?? [],
+    stops: tour.stops ?? [],
   }
   if (locale === 'ru') return base
   const t = tour.translations?.[locale]
