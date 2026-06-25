@@ -237,13 +237,17 @@ export default async function TourPage({ params }: { params: Params }) {
       </section>
 
       {(() => {
-        // Со stops фото галереи не «разбираются» по блокам описания — показываем все.
-        const blockCount = stops.length > 0
-          ? 0
-          : tour.description
+        // Со stops: в галерее показываем только фото, НЕ использованные в точках.
+        let remaining: string[]
+        if (stops.length > 0) {
+          const used = new Set(stops.map((s) => s.image_url).filter(Boolean) as string[])
+          remaining = tour.gallery.filter((g) => !used.has(g))
+        } else {
+          const blockCount = tour.description
             ? tour.description.split(/\n\s*\n/).map((b) => b.trim()).filter(Boolean).length
             : 0
-        const remaining = tour.gallery.slice(blockCount)
+          remaining = tour.gallery.slice(blockCount)
+        }
         if (remaining.length === 0) return null
         return (
           <section className="sec gallery-sec">
@@ -252,7 +256,7 @@ export default async function TourPage({ params }: { params: Params }) {
                 <span className="eyebrow">{t('galleryEyebrow')}</span>
                 <h2>{t('galleryTitle')}</h2>
               </div>
-              <Gallery images={tour.gallery} start={blockCount} alt={tour.title} />
+              <Gallery images={remaining} start={0} alt={tour.title} />
             </div>
           </section>
         )
