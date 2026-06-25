@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import { getTranslations } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
 import BackLink from '@/components/BackLink'
+import Gallery from '@/components/Gallery'
 import { getTour, formatPrice } from '@/lib/tours'
 import { getSiteContent, type Locale } from '@/lib/content'
 import type { TourFormat } from '@/types/database'
@@ -210,12 +211,7 @@ export default async function TourPage({ params }: { params: Params }) {
                 <span className="eyebrow">{t('galleryEyebrow')}</span>
                 <h2>{t('galleryTitle')}</h2>
               </div>
-              <div className="gallery">
-                {remaining.map((src, i) => (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img key={i} src={src} alt={`${tour.title} — фото ${blockCount + i + 1}`} />
-                ))}
-              </div>
+              <Gallery images={tour.gallery} start={blockCount} alt={tour.title} />
             </div>
           </section>
         )
