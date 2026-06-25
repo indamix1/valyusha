@@ -123,7 +123,9 @@
     "formSending": "Sending…",
     "formSuccess": "Thank you! Your review has been submitted and will appear after moderation.",
     "formError": "Could not submit. Please try again.",
-    "formCancel": "Cancel"
+    "formCancel": "Cancel",
+    "readFull": "Read more",
+    "collapse": "Show less"
   },
   "toursPage": {
     "eyebrow": "All destinations",

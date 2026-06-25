@@ -6,6 +6,7 @@ import { Link } from '@/i18n/navigation'
 import TourGrid from '@/components/TourGrid'
 import SakuraPetals from '@/components/SakuraPetals'
 import ReviewForm from '@/components/ReviewForm'
+import ReviewCard from '@/components/ReviewCard'
 
 export default async function Home({
   params,
@@ -289,11 +290,7 @@ export default async function Home({
     </div>
     <div className="reviews">
       {reviews.map((r) => (
-        <div className="review" key={r.id}>
-          <div className="review-head"><span className="avatar"></span><div><b>{r.author_name}</b>{r.author_city && <span>{r.author_city}</span>}</div></div>
-          <div className="stars">{'★'.repeat(Math.max(1, Math.min(5, r.rating)))}</div>
-          <p>{r.text}</p>
-        </div>
+        <ReviewCard key={r.id} name={r.author_name} city={r.author_city} rating={r.rating} text={r.text} />
       ))}
     </div>
     <ReviewForm />
