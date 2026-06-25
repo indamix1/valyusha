@@ -6,7 +6,7 @@ import { Link } from '@/i18n/navigation'
 import TourGrid from '@/components/TourGrid'
 import SakuraPetals from '@/components/SakuraPetals'
 import ReviewForm from '@/components/ReviewForm'
-import ReviewCard from '@/components/ReviewCard'
+import ReviewsList from '@/components/ReviewsList'
 
 export default async function Home({
   params,
@@ -236,7 +236,7 @@ export default async function Home({
           <li><span className="ck"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M5 12l5 5L20 6"/></svg></span>{t('about.point3')}</li>
           <li><span className="ck"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M5 12l5 5L20 6"/></svg></span>{t('about.point4')}</li>
         </ul>
-        <a href="#foot" className="btn btn-dark">{t('about.cta')}</a>
+        <Link href="/pro-mene" className="btn btn-dark">{t('about.cta')}</Link>
 
         <div className="map-card">
           <h4>{t('about.mapTitle')}</h4>
@@ -288,11 +288,7 @@ export default async function Home({
       <span className="eyebrow">{t('reviews.eyebrow')}</span>
       <h2>{t('reviews.title')}</h2>
     </div>
-    <div className="reviews">
-      {reviews.map((r) => (
-        <ReviewCard key={r.id} name={r.author_name} city={r.author_city} rating={r.rating} text={r.text} />
-      ))}
-    </div>
+    <ReviewsList reviews={reviews} />
     <ReviewForm />
   </div>
 </section>

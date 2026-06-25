@@ -125,7 +125,9 @@
     "formError": "Could not submit. Please try again.",
     "formCancel": "Cancel",
     "readFull": "Read more",
-    "collapse": "Show less"
+    "collapse": "Show less",
+    "showAll": "Show all reviews",
+    "showLess": "Show fewer reviews"
   },
   "toursPage": {
     "eyebrow": "All destinations",
