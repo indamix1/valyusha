@@ -2,7 +2,14 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getTranslations } from 'next-intl/server'
 import { getSiteContent, type Locale } from '@/lib/content'
+import { getToursByCategory } from '@/lib/tours'
+import TourGrid from '@/components/TourGrid'
 import BackLink from '@/components/BackLink'
+
+// Категорія сторінки -> категорія турів у БД (де є прив'язані тури).
+const TOUR_CATEGORY: Record<string, string> = {
+  kruizni: 'cruise',
+}
 
 // Білий список категорій = пунктам меню (поза цим списком -> 404).
 const CATEGORIES = [
@@ -40,7 +47,12 @@ export default async function CategoryPage({ params }: { params: Params }) {
   const cc = await getTranslations('category')
   const b = await getTranslations('brand')
   const nav = await getTranslations('nav')
+  const rt = await getTranslations('routes')
   const body = t.raw(`${category}.body`) as string[]
+
+  // Тури, прив'язані до цієї категорії (напр. круїзні).
+  const tourCat = TOUR_CATEGORY[category]
+  const tours = tourCat ? await getToursByCategory(tourCat, locale as Locale) : []
 
   const c = await getSiteContent(locale as Locale)
   const phone = c.contact_phone || '+81 80 3360 5724'
@@ -65,6 +77,28 @@ export default async function CategoryPage({ params }: { params: Params }) {
           {body.map((p, i) => (
             <p key={i}>{p}</p>
           ))}
+
+          {tours.length > 0 && (
+            <div className="category-tours">
+              <TourGrid
+                tours={tours}
+                labels={{
+                  from: rt('from'),
+                  more: rt('more'),
+                  all: rt('all'),
+                  empty: rt('empty'),
+                  seasons: {
+                    all: rt('seasonAll'),
+                    spring: rt('seasonSpring'),
+                    summer: rt('seasonSummer'),
+                    autumn: rt('seasonAutumn'),
+                    winter: rt('seasonWinter'),
+                  },
+                }}
+                hideSeasons
+              />
+            </div>
+          )}
 
           {category === 'kontakty' && (
             <div className="contacts-card">

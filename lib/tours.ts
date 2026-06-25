@@ -43,6 +43,23 @@ export async function getTours(locale: Locale): Promise<Tour[]> {
   return (data ?? []).map((row) => localizeTour(row as Tour, locale))
 }
 
+// Активні тури певної категорії (напр. 'cruise'), відсортовані й локалізовані.
+export async function getToursByCategory(
+  category: string,
+  locale: Locale
+): Promise<Tour[]> {
+  const supabase = await createClient()
+  const { data } = await supabase
+    .from('tours')
+    .select('*')
+    .eq('is_active', true)
+    .eq('category', category)
+    .order('sort_order', { ascending: true })
+    .order('created_at', { ascending: true })
+
+  return (data ?? []).map((row) => localizeTour(row as Tour, locale))
+}
+
 // Один активний тур за slug, локалізований. null — якщо не знайдено/прихований.
 export async function getTour(
   slug: string,

@@ -295,6 +295,7 @@
   .page-head h1{font-family:var(--serif);font-weight:500;font-size:clamp(32px,5vw,52px);line-height:1.08;margin-top:10px}
   .page-lead{font-size:18px;color:var(--ink-soft);max-width:52ch;margin-top:12px}
   .page-prose{max-width:760px}
+  .category-tours{margin-top:40px}
   .page-prose p{font-size:18px;color:var(--ink-soft);line-height:1.65;margin-bottom:18px}
   .contacts-card{display:grid;gap:16px;margin:6px 0 4px}
   .contacts-card a{display:inline-flex;align-items:center;gap:12px;font-size:17px;font-weight:600;color:var(--ink)}

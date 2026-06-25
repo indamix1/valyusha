@@ -10,7 +10,7 @@
 INSERT INTO tours (
   slug, title, city, summary, description, org_details,
   price, currency, price_note, price_details,
-  duration, participants, format,
+  duration, participants, format, category,
   includes, excludes, seasons,
   sort_order, is_active, translations
 ) VALUES
@@ -33,7 +33,7 @@ INSERT INTO tours (
 Эта экскурсия идеально подходит для тех, кто хочет за несколько часов увидеть главные символы региона, насладиться природой, историей и неповторимой атмосферой настоящей Японии.',
   'Основные локации: Нихондайра · канатная дорога Nihondaira Ropeway · храм Кунодзан Тосёгу · археологический комплекс Торо · побережье Михо-но-Мацубара.',
   NULL, 'EUR', 'от, за экскурсию', NULL,
-  '4–6 часов', 'Индивидуально (для гостей круиза)', 'individual',
+  '4–6 часов', 'Индивидуально (для гостей круиза)', 'individual', 'cruise',
   ARRAY['Встреча и возвращение в порт Симидзу', 'Комфортный автомобиль', 'Услуги лицензированного гида', 'Индивидуальный маршрут без больших туристических групп'],
   ARRAY[]::text[],
   ARRAY['spring','summer','autumn','winter'],
@@ -61,7 +61,7 @@ INSERT INTO tours (
 Это маршрут для тех, кто любит историю, старинные города, атмосферные улочки и настоящую Японию без толп туристов.',
   'Основные локации: Кашибая · тоннель Мэйдзи Уцуноя · Уцуноя-дзюку · Марико-дзюку · парк Сумпу · руины замка Сумпу.',
   NULL, 'EUR', 'от, за экскурсию', NULL,
-  '4–6 часов', 'Индивидуально (для гостей круиза)', 'individual',
+  '4–6 часов', 'Индивидуально (для гостей круиза)', 'individual', 'cruise',
   ARRAY['Встреча и возвращение в порт Симидзу', 'Комфортный автомобиль', 'Услуги лицензированного гида', 'Индивидуальный маршрут без больших туристических групп'],
   ARRAY[]::text[],
   ARRAY['spring','summer','autumn','winter'],
@@ -88,7 +88,7 @@ INSERT INTO tours (
   'Основные локации: чайные плантации Сидзуоки · водопад Сираито · сакеварня (по желанию, бронирование обязательно) · святилище Fujisan Hongū Sengen Taisha. Альтернатива в дождь: Mount Fuji World Heritage Centre.',
   1200, 'EUR', 'за экскурсию (1–6 гостей)', '1200 € за экскурсию (1–6 гостей).
 В цену входят все входные билеты по маршруту.',
-  '7–8 часов', '1–6 гостей', 'individual',
+  '7–8 часов', '1–6 гостей', 'individual', 'cruise',
   ARRAY['Встреча и возвращение в порт Симидзу', 'Комфортный автомобиль', 'Услуги лицензированного гида', 'Индивидуальный маршрут без больших туристических групп', 'Все входные билеты по маршруту'],
   ARRAY['Дегустация саке (по желанию, бронирование обязательно)'],
   ARRAY['spring','summer','autumn','winter'],
@@ -109,6 +109,7 @@ ON CONFLICT (slug) DO UPDATE SET
   duration     = EXCLUDED.duration,
   participants = EXCLUDED.participants,
   format       = EXCLUDED.format,
+  category     = EXCLUDED.category,
   includes     = EXCLUDED.includes,
   excludes     = EXCLUDED.excludes,
   seasons      = EXCLUDED.seasons,

@@ -31,6 +31,7 @@ export interface Tour {
   duration: string | null
   participants: string | null
   format: TourFormat
+  category: string | null
   seasons: string[]
   includes: string[]
   excludes: string[]
