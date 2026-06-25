@@ -5,6 +5,7 @@ import { getReviews } from '@/lib/reviews'
 import { Link } from '@/i18n/navigation'
 import TourGrid from '@/components/TourGrid'
 import SakuraPetals from '@/components/SakuraPetals'
+import ReviewForm from '@/components/ReviewForm'
 
 export default async function Home({
   params,
@@ -295,6 +296,7 @@ export default async function Home({
         </div>
       ))}
     </div>
+    <ReviewForm />
   </div>
 </section>
     </>

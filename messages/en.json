@@ -88,7 +88,7 @@
     "onsen_d": "Onsen bathing — relax in scenic natural hot spring baths"
   },
   "about": {
-    "eyebrow": "Hi! I'm Valentyna",
+    "eyebrow": "Me and my team of guides",
     "point1": "Officially licensed guide in Japan",
     "point2": "Living in Japan for over 20 years — I know its culture, traditions and everyday life",
     "point3": "I craft routes that reveal the real Japan, not just the popular spots",
@@ -112,7 +112,18 @@
     "r2_text": "We travelled by cruise and took a tour with Valentyna in Tokyo. We saw the most in a short time. A true professional!",
     "r3_name": "Maryna",
     "r3_city": "Toronto",
-    "r3_text": "Thank you for a magical day in Hakone! The route, the views, the onsen — everything was wonderful. I recommend her wholeheartedly!"
+    "r3_text": "Thank you for a magical day in Hakone! The route, the views, the onsen — everything was wonderful. I recommend her wholeheartedly!",
+    "leaveBtn": "Leave a review",
+    "formTitle": "Share your impressions",
+    "formName": "Your name",
+    "formCity": "City (optional)",
+    "formRating": "Rating",
+    "formText": "Your review",
+    "formSubmit": "Submit review",
+    "formSending": "Sending…",
+    "formSuccess": "Thank you! Your review has been submitted and will appear after moderation.",
+    "formError": "Could not submit. Please try again.",
+    "formCancel": "Cancel"
   },
   "toursPage": {
     "eyebrow": "All destinations",

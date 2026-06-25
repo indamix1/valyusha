@@ -127,10 +127,44 @@ export default function AdminReviews() {
     load()
   }
 
+  async function approve(id: string) {
+    await supabase.from('reviews').update({ is_approved: true }).eq('id', id)
+    load()
+  }
+
+  const pending = reviews.filter((r) => !r.is_approved)
+
   return (
     <div style={{ maxWidth: 760, margin: '0 auto', padding: 40, fontFamily: 'system-ui, sans-serif', color: '#312D29' }}>
       <Link href="/admin" style={{ fontSize: 14, color: '#8A7F75' }}>← Адмінка</Link>
       <h1 style={{ fontSize: 26, marginTop: 4, marginBottom: 20 }}>Відгуки</h1>
+
+      {pending.length > 0 && (
+        <div style={{ background: '#FBEDF0', border: '1px solid rgba(190,98,115,.3)', borderRadius: 12, padding: 18, marginBottom: 24 }}>
+          <h3 style={{ fontSize: 16, fontWeight: 800, marginBottom: 12, color: '#BE6273' }}>
+            На модерації · {pending.length}
+          </h3>
+          {pending.map((r, i) => (
+            <div key={r.id} style={{ padding: '12px 0', borderTop: i ? '1px solid rgba(190,98,115,.2)' : 'none' }}>
+              <div style={{ fontWeight: 700 }}>
+                {r.author_name} {r.author_city ? <span style={{ color: '#8A7F75', fontWeight: 400 }}>· {r.author_city}</span> : null}
+                <span style={{ color: '#C7A24E', marginLeft: 8 }}>{'★'.repeat(r.rating)}</span>
+              </div>
+              <div style={{ fontSize: 14, color: '#5C544C', margin: '6px 0 10px' }}>{r.text}</div>
+              <div style={{ display: 'flex', gap: 10 }}>
+                <button onClick={() => approve(r.id)}
+                  style={{ border: 'none', background: '#312D29', color: '#fff', padding: '8px 18px', borderRadius: 20, cursor: 'pointer', fontSize: 14, fontWeight: 700 }}>
+                  ✓ Підтвердити
+                </button>
+                <button onClick={() => remove(r.id, r.author_name)}
+                  style={{ border: '1px solid rgba(190,98,115,.5)', background: 'transparent', color: '#BE6273', padding: '8px 18px', borderRadius: 20, cursor: 'pointer', fontSize: 14 }}>
+                  ✕ Відхилити
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
 
       <form onSubmit={save} style={{ background: '#fff', border: '1px solid rgba(49,45,41,.12)', borderRadius: 12, padding: 20, marginBottom: 28 }}>
         <h3 style={{ fontSize: 16, fontWeight: 800, marginBottom: 14 }}>
