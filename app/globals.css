@@ -10,7 +10,7 @@
     --accent:#E5778C;--accent-soft:#E98598;--accent-bright:#F0A5B3;--accent-dim:#B98591;
     --scrim:18,12,20;
     --script:'Sacramento',cursive;--serif:'Fraunces',Georgia,serif;--sans:'Nunito Sans',system-ui,sans-serif;
-    --hero-img:url('/hero.png');
+    --hero-img:url('/hero2.png');
   }
   *{margin:0;padding:0;box-sizing:border-box}
 
