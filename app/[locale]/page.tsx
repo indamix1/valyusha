@@ -7,6 +7,7 @@ import TourGrid from '@/components/TourGrid'
 import SakuraPetals from '@/components/SakuraPetals'
 import ReviewForm from '@/components/ReviewForm'
 import ReviewsList from '@/components/ReviewsList'
+import ScrollLink from '@/components/ScrollLink'
 
 export default async function Home({
   params,
@@ -86,10 +87,10 @@ export default async function Home({
         <span className="c-ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M3 21h18M5 21V9l7-5 7 5v12M9 21v-6h6v6"/></svg></span>
         <div className="cat-text"><h3>{t('cats.excursions_t')}</h3><p>{t('cats.excursions_d')}</p></div>
       </Link>
-      <a href="#custom" className="cat">
+      <ScrollLink targetId="custom" className="cat">
         <span className="c-ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg></span>
         <div className="cat-text"><h3>{t('cats.individual_t')}</h3><p>{t('cats.individual_d')}</p></div>
-      </a>
+      </ScrollLink>
       <Link href="/kruizni" className="cat">
         <span className="c-ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M2 16l2-5h16l2 5M4 16c2 2 4 2 6 0s4-2 6 0 4 2 4 0M12 3v8M9 6h6"/></svg></span>
         <div className="cat-text"><h3>{t('cats.cruise_t')}</h3><p>{t('cats.cruise_d')}</p></div>
