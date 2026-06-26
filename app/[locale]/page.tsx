@@ -4,7 +4,6 @@ import { getTours } from '@/lib/tours'
 import { getReviews } from '@/lib/reviews'
 import { Link } from '@/i18n/navigation'
 import TourGrid from '@/components/TourGrid'
-import SakuraPetals from '@/components/SakuraPetals'
 import ReviewForm from '@/components/ReviewForm'
 import ReviewsList from '@/components/ReviewsList'
 import ScrollLink from '@/components/ScrollLink'
@@ -39,7 +38,6 @@ export default async function Home({
   return (
     <>
 <section className="hero">
-  <SakuraPetals />
   <div className="hero-eyebrow-bar">
     <span className="eyebrow">{c.hero_eyebrow}</span>
   </div>

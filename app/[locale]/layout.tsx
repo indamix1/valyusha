@@ -7,7 +7,6 @@ import { routing } from '@/i18n/routing'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import ScrollReveal from '@/components/ScrollReveal'
-import SakuraPetals from '@/components/SakuraPetals'
 import Parallax from '@/components/Parallax'
 
 // Дозволяє згенерувати сторінки для всіх мов наперед
