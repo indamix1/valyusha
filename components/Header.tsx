@@ -40,7 +40,7 @@ export default function Header() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/logo.png" alt="" className="brand-logo" />
           <div>
-            <span className="name">Valentyna</span>
+            <span className="name">Valentina</span>
             <span className="sub">Japan Guide</span>
           </div>
         </Link>

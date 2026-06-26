@@ -8,7 +8,7 @@ export default async function Footer() {
   <div className="wrap">
     <div className="foot-grid">
       <div>
-        <a href="#" className="brand"><img src="/logo.png" alt="" className="brand-logo" /><div><span className="name">Valentyna</span><span className="sub">Japan Guide</span></div></a>
+        <a href="#" className="brand"><img src="/logo.png" alt="" className="brand-logo" /><div><span className="name">Valentina</span><span className="sub">Japan Guide</span></div></a>
         <p style={{ color: 'rgba(255,255,255,.7)', fontSize: '15px', marginTop: '16px', maxWidth: '34ch' }}>{t('tagline')}</p>
       </div>
       <div>
