@@ -4,9 +4,9 @@
 insert into site_content (key, value, value_uk, value_en) values
   (
     'hero_title',
-    'Ваш персональный проводник в Японию. Авторские маршруты локальных гидов от классики до секретных локаций.',
-    'Ваш персональний провідник у Японію. Авторські маршрути місцевих гідів — від класики до секретних локацій.',
-    'Your personal guide to Japan. Original routes by local guides — from classics to secret spots.'
+    'Ваш персональный проводник в Японию. Авторские маршруты от классики до секретных локаций.',
+    'Ваш персональний провідник у Японію. Авторські маршрути — від класики до секретних локацій.',
+    'Your personal guide to Japan. Original routes from classics to secret spots.'
   ),
   (
     'hero_subtitle',
