@@ -1,8 +1,21 @@
--- seed-hero.sql — заголовок и подзаголовок hero (RU).
--- Большой заголовок (H1) и мелкий подзаголовок поменяны местами по просьбе.
--- Запусти в Supabase -> SQL Editor. UK/EN откатываются на RU, пока не заданы.
+-- seed-hero.sql — заголовок и подзаголовок hero на 3 языках (RU = основа).
+-- Запусти в Supabase -> SQL Editor.
 
-insert into site_content (key, value) values
-  ('hero_title', 'Ваш персональный проводник в Японию. Авторские маршруты локальных гидов от классики до секретных локаций.'),
-  ('hero_subtitle', 'Индивидуальные путешествия по Японии премиум-класса с Валентиной и командой профессиональных гидов.')
-on conflict (key) do update set value = excluded.value, updated_at = now();
+insert into site_content (key, value, value_uk, value_en) values
+  (
+    'hero_title',
+    'Ваш персональный проводник в Японию. Авторские маршруты локальных гидов от классики до секретных локаций.',
+    'Ваш персональний провідник у Японію. Авторські маршрути місцевих гідів — від класики до секретних локацій.',
+    'Your personal guide to Japan. Original routes by local guides — from classics to secret spots.'
+  ),
+  (
+    'hero_subtitle',
+    'Индивидуальные путешествия по Японии премиум-класса с Валентиной и командой профессиональных гидов.',
+    'Індивідуальні подорожі Японією преміум-класу з Валентиною та командою професійних гідів.',
+    'Premium private journeys across Japan with Valentina and a team of professional guides.'
+  )
+on conflict (key) do update set
+  value = excluded.value,
+  value_uk = excluded.value_uk,
+  value_en = excluded.value_en,
+  updated_at = now();
