@@ -115,6 +115,25 @@ export interface Hotel {
   created_at: string
 }
 
+// Спеціальний маршрут: базові поля = ru, переклади uk/en у translations.
+export interface SpecialRouteTranslation {
+  title?: string
+  description?: string
+}
+
+export interface SpecialRoute {
+  id: string
+  slug: string
+  title: string
+  description: string | null
+  cover_url: string | null
+  gallery: string[]
+  sort_order: number
+  is_active: boolean
+  translations: Record<string, SpecialRouteTranslation>
+  created_at: string
+}
+
 export interface SiteContent {
   key: string
   value: string | null

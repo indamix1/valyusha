@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 import { getSiteContent, type Locale } from '@/lib/content'
+import { getSpecials } from '@/lib/specials'
+import { Link } from '@/i18n/navigation'
 
 type Params = Promise<{ locale: string }>
 
@@ -15,13 +17,8 @@ export default async function SpecialsPage({ params }: { params: Params }) {
   const c = await getSiteContent(locale as Locale)
   const t = await getTranslations('specials')
   const cc = await getTranslations('category')
-  const ct = await getTranslations('custom')
+  const specials = await getSpecials(locale as Locale)
   const waLink = c.contact_whatsapp || 'https://wa.me/818033605724'
-
-  const items = (c.specials || ct('specials'))
-    .split(',')
-    .map((s) => s.trim())
-    .filter(Boolean)
 
   return (
     <>
@@ -35,16 +32,25 @@ export default async function SpecialsPage({ params }: { params: Params }) {
 
       <section className="sec">
         <div className="wrap">
-          <div className="specials-tags">
-            {items.map((item) => (
-              <span className="specials-tag" key={item}>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2l2.4 5 5.6.5-4.3 3.7 1.3 5.4L12 19l-5 2.6 1.3-5.4L4 12.5l5.6-.5z" /></svg>
-                {item}
-              </span>
-            ))}
-          </div>
+          {specials.length > 0 && (
+            <div className="spec-cards">
+              {specials.map((s, i) => (
+                <Link href={`/specials/${s.slug}`} className="spec-card" key={s.id}>
+                  <div
+                    className={s.cover_url ? 'spec-card-img' : `spec-card-img r${(i % 6) + 1}`}
+                    style={s.cover_url ? { backgroundImage: `url(${s.cover_url})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}
+                  />
+                  <div className="spec-card-body">
+                    <h3>{s.title}</h3>
+                    {s.description && <p>{s.description}</p>}
+                    <span className="route-link">{t('more')}</span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
 
-          <div className="page-cta" style={{ textAlign: 'center', marginTop: 40 }}>
+          <div className="page-cta" style={{ textAlign: 'center', marginTop: 44 }}>
             <h3>{cc('ctaTitle')}</h3>
             <a href={waLink} className="btn btn-rose" target="_blank" rel="noopener noreferrer">
               <svg className="ico" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.4 5 5.1-1.3A10 10 0 1 0 12 2z" /></svg>

@@ -3,6 +3,7 @@ import { getSiteContent, type Locale } from '@/lib/content'
 import { getTours } from '@/lib/tours'
 import { getReviews } from '@/lib/reviews'
 import { getHotels } from '@/lib/hotels'
+import { getSpecials } from '@/lib/specials'
 import { Link } from '@/i18n/navigation'
 import TourGrid from '@/components/TourGrid'
 import ReviewForm from '@/components/ReviewForm'
@@ -18,6 +19,7 @@ export default async function Home({
   const c = await getSiteContent(locale as Locale)
   const tours = await getTours(locale as Locale)
   const hotels = await getHotels(locale as Locale)
+  const specials = await getSpecials(locale as Locale)
   const dbReviews = await getReviews(locale as Locale)
   const t = await getTranslations()
 
@@ -169,12 +171,19 @@ export default async function Home({
           {t('custom.specialTitle')}
         </h4>
         <div className="city-tags">
-          {(c.specials || t('custom.specials')).split(',').map((s) => s.trim()).filter(Boolean).map((item) => (
-            <Link href="/specials" className="city-tag special-tag" key={item}>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2l2.4 5 5.6.5-4.3 3.7 1.3 5.4L12 19l-5 2.6 1.3-5.4L4 12.5l5.6-.5z"/></svg>
-              {item}
-            </Link>
-          ))}
+          {specials.length > 0
+            ? specials.map((s) => (
+                <Link href={`/specials/${s.slug}`} className="city-tag special-tag" key={s.id}>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2l2.4 5 5.6.5-4.3 3.7 1.3 5.4L12 19l-5 2.6 1.3-5.4L4 12.5l5.6-.5z"/></svg>
+                  {s.title}
+                </Link>
+              ))
+            : (c.specials || t('custom.specials')).split(',').map((x) => x.trim()).filter(Boolean).map((item) => (
+                <Link href="/specials" className="city-tag special-tag" key={item}>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2l2.4 5 5.6.5-4.3 3.7 1.3 5.4L12 19l-5 2.6 1.3-5.4L4 12.5l5.6-.5z"/></svg>
+                  {item}
+                </Link>
+              ))}
         </div>
       </div>
     </div>
