@@ -7,6 +7,7 @@ import Gallery from '@/components/Gallery'
 import { getTour, formatPrice } from '@/lib/tours'
 import { getPexelsImage } from '@/lib/pexels'
 import { getSiteContent, type Locale } from '@/lib/content'
+import { canonicalUrl, languageAlternates } from '@/lib/site'
 import type { TourFormat } from '@/types/database'
 
 type Params = Promise<{ locale: string; slug: string }>
@@ -18,10 +19,18 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale, slug } = await params
   const tour = await getTour(slug, locale as Locale)
-  if (!tour) return { title: 'Тур не знайдено' }
+  if (!tour) return { title: 'Тур не найден' }
+  const path = `/tury/${slug}`
   return {
-    title: `${tour.title} · Valyusha`,
+    title: tour.title,
     description: tour.summary ?? undefined,
+    alternates: { canonical: canonicalUrl(locale, path), languages: languageAlternates(path) },
+    openGraph: {
+      title: tour.title,
+      description: tour.summary ?? undefined,
+      url: canonicalUrl(locale, path),
+      images: tour.cover_url ? [tour.cover_url] : undefined,
+    },
   }
 }
 

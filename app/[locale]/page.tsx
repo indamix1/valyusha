@@ -9,6 +9,23 @@ import TourGrid from '@/components/TourGrid'
 import ReviewForm from '@/components/ReviewForm'
 import ReviewsList from '@/components/ReviewsList'
 import ScrollLink from '@/components/ScrollLink'
+import type { Metadata } from 'next'
+import { canonicalUrl, languageAlternates } from '@/lib/site'
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale } = await params
+  const ts = await getTranslations({ locale, namespace: 'seo' })
+  return {
+    title: ts('homeTitle'),
+    description: ts('homeDescription'),
+    alternates: { canonical: canonicalUrl(locale, ''), languages: languageAlternates('') },
+    openGraph: { title: ts('homeTitle'), description: ts('homeDescription'), url: canonicalUrl(locale, '') },
+  }
+}
 
 export default async function Home({
   params,

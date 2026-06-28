@@ -5,6 +5,7 @@ import { getSiteContent, type Locale } from '@/lib/content'
 import { getToursByCategory } from '@/lib/tours'
 import TourGrid from '@/components/TourGrid'
 import BackLink from '@/components/BackLink'
+import { canonicalUrl, languageAlternates } from '@/lib/site'
 
 // Категорія сторінки -> категорія турів у БД (де є прив'язані тури).
 const TOUR_CATEGORY: Record<string, string> = {
@@ -33,10 +34,14 @@ export async function generateMetadata({
 }: {
   params: Params
 }): Promise<Metadata> {
-  const { category } = await params
+  const { locale, category } = await params
   if (!isCategory(category)) return {}
   const t = await getTranslations('categories')
-  return { title: `${t(`${category}.title`)} · Valyusha` }
+  const path = `/${category}`
+  return {
+    title: t(`${category}.title`),
+    alternates: { canonical: canonicalUrl(locale, path), languages: languageAlternates(path) },
+  }
 }
 
 export default async function CategoryPage({ params }: { params: Params }) {
