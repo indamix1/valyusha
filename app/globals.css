@@ -227,6 +227,18 @@
   .review-more{margin-top:10px;background:none;border:none;padding:0;cursor:pointer;font-family:inherit;font-weight:700;font-size:13px;color:var(--rose-deep);letter-spacing:.02em}
   .review-more:hover{text-decoration:underline}
   .reviews-foot{text-align:center;margin-top:38px}
+  /* hotels */
+  .hotels{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .hotel{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;transition:transform .25s ease,box-shadow .25s ease}
+  .hotel:hover{transform:translateY(-4px);box-shadow:0 18px 36px -20px rgba(49,45,41,.4)}
+  .hotel-img{position:relative;aspect-ratio:16/10;background-size:cover;background-position:center}
+  .hotel-price{position:absolute;right:12px;bottom:12px;background:rgba(255,255,255,.92);color:var(--ink);font-weight:800;font-size:13.5px;padding:6px 12px;border-radius:30px}
+  .hotel-body{padding:20px;flex:1;display:flex;flex-direction:column}
+  .hotel-stars{color:var(--gold);font-size:15px;letter-spacing:2px;margin-bottom:6px}
+  .hotel-body h3{font-family:var(--serif);font-weight:600;font-size:20px;line-height:1.2;margin-bottom:4px}
+  .hotel-area{font-size:13px;color:var(--muted);margin-bottom:10px}
+  .hotel-body p{font-size:14px;color:var(--muted);line-height:1.55;margin-bottom:16px}
+  .hotel-btn{margin-top:auto;align-self:flex-start}
   /* review form */
   .review-form{max-width:620px;margin:38px auto 0;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:28px;box-shadow:0 18px 40px -28px rgba(49,45,41,.35)}
   .review-form h3{font-family:var(--serif);font-weight:600;font-size:22px;margin-bottom:18px;text-align:center}
@@ -424,6 +436,7 @@
     .cat .c-ico{width:50px;height:50px}
     .cat h3{font-size:17px}
     .routes{grid-template-columns:1fr 1fr;gap:16px}
+    .hotels{grid-template-columns:1fr 1fr;gap:16px}
     .custom-grid{grid-template-columns:1fr;gap:28px}
     .bonuses{grid-template-columns:1fr 1fr;gap:14px}
     .bonus{padding:22px 18px}
@@ -470,6 +483,7 @@
     .cat h3{font-size:16px;margin-bottom:4px}
     .cat p{font-size:13px}
     .routes{grid-template-columns:1fr;gap:16px}
+    .hotels{grid-template-columns:1fr;gap:16px}
     .route-body h3{font-size:19px}
     .route-body p{font-size:13px;min-height:0}
     .bonuses{grid-template-columns:1fr;gap:12px}

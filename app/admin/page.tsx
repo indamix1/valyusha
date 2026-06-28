@@ -11,6 +11,7 @@ export default async function AdminHome() {
   const { count: toursCount } = await supabase.from('tours').select('*', { count: 'exact', head: true })
   const { count: postsCount } = await supabase.from('posts').select('*', { count: 'exact', head: true })
   const { count: reviewsCount } = await supabase.from('reviews').select('*', { count: 'exact', head: true })
+  const { count: hotelsCount } = await supabase.from('hotels').select('*', { count: 'exact', head: true })
 
   async function signOut() {
     'use server'
@@ -34,6 +35,7 @@ export default async function AdminHome() {
         <Card href="/admin/content" label="Тексти головної" active />
         <Card href="/admin/blog" label="Статті блогу" value={postsCount ?? 0} active />
         <Card href="/admin/reviews" label="Відгуки" value={reviewsCount ?? 0} active />
+        <Card href="/admin/hotels" label="Готелі" value={hotelsCount ?? 0} active />
       </div>
 
       <p style={{ marginTop: 28, color: '#8A7F75', fontSize: 14 }}>

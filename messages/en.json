@@ -129,6 +129,11 @@
     "showAll": "Show all reviews",
     "showLess": "Show fewer reviews"
   },
+  "hotels": {
+    "eyebrow": "Where to stay",
+    "title": "Recommended hotels",
+    "book": "Book now"
+  },
   "toursPage": {
     "eyebrow": "All destinations",
     "title": "Routes & excursions",

@@ -92,6 +92,29 @@ export interface Review {
   created_at: string
 }
 
+// Переклади готелю: базові поля = ru, тут лежать uk/en.
+export interface HotelTranslation {
+  name?: string
+  area?: string
+  description?: string
+  price_note?: string
+}
+
+export interface Hotel {
+  id: string
+  name: string
+  area: string | null
+  stars: number
+  description: string | null
+  url: string | null
+  price_note: string | null
+  image_url: string | null
+  sort_order: number
+  is_active: boolean
+  translations: Record<string, HotelTranslation>
+  created_at: string
+}
+
 export interface SiteContent {
   key: string
   value: string | null
