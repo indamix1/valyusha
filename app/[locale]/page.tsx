@@ -132,38 +132,6 @@ export default async function Home({
   </div>
 </section>
 
-{hotels.length > 0 && (
-<section className="sec hotels-sec reveal" id="hotels">
-  <div className="wrap">
-    <div className="sec-title">
-      <span className="eyebrow">{t('hotels.eyebrow')}</span>
-      <h2>{t('hotels.title')}</h2>
-    </div>
-    <div className="hotels">
-      {hotels.map((h, i) => (
-        <article className="hotel" key={h.id}>
-          <div
-            className={h.image_url ? 'hotel-img' : `hotel-img r${(i % 6) + 1}`}
-            style={h.image_url ? { backgroundImage: `url(${h.image_url})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}
-          >
-            {h.price_note && <span className="hotel-price">{h.price_note}</span>}
-          </div>
-          <div className="hotel-body">
-            <div className="hotel-stars" aria-label={`${h.stars} звёзд`}>{'★'.repeat(Math.max(1, Math.min(5, h.stars)))}</div>
-            <h3>{h.name}</h3>
-            {h.area && <div className="hotel-area">{h.area}</div>}
-            {h.description && <p>{h.description}</p>}
-            {h.url && (
-              <a href={h.url} target="_blank" rel="noopener noreferrer" className="btn btn-rose hotel-btn">{t('hotels.book')}</a>
-            )}
-          </div>
-        </article>
-      ))}
-    </div>
-  </div>
-</section>
-)}
-
 <section className="sec custom-sec reveal" id="custom">
   <div className="wrap">
     <a href="#formats" className="back-link on-dark">
@@ -212,6 +180,38 @@ export default async function Home({
     </div>
   </div>
 </section>
+
+{hotels.length > 0 && (
+<section className="sec hotels-sec reveal" id="hotels">
+  <div className="wrap">
+    <div className="sec-title">
+      <span className="eyebrow">{t('hotels.eyebrow')}</span>
+      <h2>{t('hotels.title')}</h2>
+    </div>
+    <div className="hotels">
+      {hotels.map((h, i) => (
+        <article className="hotel" key={h.id}>
+          <div
+            className={h.image_url ? 'hotel-img' : `hotel-img r${(i % 6) + 1}`}
+            style={h.image_url ? { backgroundImage: `url(${h.image_url})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}
+          >
+            {h.price_note && <span className="hotel-price">{h.price_note}</span>}
+          </div>
+          <div className="hotel-body">
+            <div className="hotel-stars" aria-label={`${h.stars} звёзд`}>{'★'.repeat(Math.max(1, Math.min(5, h.stars)))}</div>
+            <h3>{h.name}</h3>
+            {h.area && <div className="hotel-area">{h.area}</div>}
+            {h.description && <p>{h.description}</p>}
+            {h.url && (
+              <a href={h.url} target="_blank" rel="noopener noreferrer" className="btn btn-rose hotel-btn">{t('hotels.book')}</a>
+            )}
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+)}
 
 <section className="sec reveal" id="bonuses">
   <div className="wrap">
