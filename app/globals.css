@@ -159,7 +159,8 @@
   .custom-card-inner .btn:hover{background:var(--accent-soft)}
   .custom-cap{color:var(--text-secondary)}
   .city-tags{display:flex;flex-wrap:wrap;gap:10px}
-  .city-tag{display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:30px;background:rgba(255,255,255,.045);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.13);font-size:14px;font-weight:600;color:var(--text-primary);transition:background .2s,border-color .2s,color .2s,transform .2s}
+  .city-tag{display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:30px;background:rgba(255,255,255,.045);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.13);font-size:14px;font-weight:600;color:var(--text-primary);text-decoration:none;cursor:pointer;transition:background .2s,border-color .2s,color .2s,transform .2s}
+  a.city-tag:hover{transform:translateY(-2px)}
   .city-tag:hover{background:rgba(255,255,255,.07);border-color:rgba(233,133,152,.5);color:var(--text-heading);transform:translateY(-2px)}
   .city-tag svg{width:16px;height:16px;color:var(--accent-dim);flex:none}
   .special-tag{background:rgba(233,133,152,.14);border-color:rgba(233,133,152,.42);color:#FBE3E8}
