@@ -5,10 +5,15 @@
     "excursions": "Excursions",
     "individual": "Individual tours",
     "cruise": "For cruise guests",
+    "specials": "Special routes",
     "transfers": "Transfers",
     "blog": "Blog",
     "contacts": "Contacts",
     "backToFormats": "Back to formats"
+  },
+  "specials": {
+    "eyebrow": "Special format",
+    "title": "Special routes"
   },
   "blog": {
     "eyebrow": "Notes on Japan",

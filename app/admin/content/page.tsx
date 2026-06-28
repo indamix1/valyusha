@@ -22,9 +22,10 @@ const LABELS: Record<string, string> = {
   contact_phone: 'Контакти · телефон',
   contact_email: 'Контакти · email',
   contact_whatsapp: 'Контакти · посилання WhatsApp',
+  specials: 'Спеціальні маршрути · список (через кому)',
 }
 const ORDER = Object.keys(LABELS)
-const MULTILINE = new Set(['hero_title', 'hero_subtitle', 'about_title', 'about_text'])
+const MULTILINE = new Set(['hero_title', 'hero_subtitle', 'about_title', 'about_text', 'specials'])
 
 const inputStyle: React.CSSProperties = {
   width: '100%', padding: '9px 11px', marginTop: 4, borderRadius: 8,
@@ -44,6 +45,12 @@ export default function AdminContent() {
       .from('site_content')
       .select('key, value, value_uk, value_en')
     const list = (data as Row[]) ?? []
+    // показати й ще не створені ключі (порожні), щоб їх можна було заповнити
+    for (const key of ORDER) {
+      if (!list.some((r) => r.key === key)) {
+        list.push({ key, value: '', value_uk: '', value_en: '' })
+      }
+    }
     list.sort((a, b) => {
       const ia = ORDER.indexOf(a.key), ib = ORDER.indexOf(b.key)
       return (ia === -1 ? 999 : ia) - (ib === -1 ? 999 : ib)

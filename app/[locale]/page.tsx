@@ -165,18 +165,24 @@ export default async function Home({
             </span>
           ))}
         </div>
-        <h4 style={{ fontSize: '13px', fontWeight: 800, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text-secondary)', marginBottom: '16px', marginTop: '28px' }}>
-          {t('custom.specialTitle')}
-        </h4>
-        <div className="city-tags">
-          {t('custom.specials').split(', ').map((item) => (
-            <span className="city-tag special-tag" key={item}>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2l2.4 5 5.6.5-4.3 3.7 1.3 5.4L12 19l-5 2.6 1.3-5.4L4 12.5l5.6-.5z"/></svg>
-              {item}
-            </span>
-          ))}
-        </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<section className="sec specials-sec reveal" id="specials">
+  <div className="wrap">
+    <div className="sec-title">
+      <span className="eyebrow">{t('specials.eyebrow')}</span>
+      <h2>{t('specials.title')}</h2>
+    </div>
+    <div className="specials-tags">
+      {(c.specials || t('custom.specials')).split(',').map((s) => s.trim()).filter(Boolean).map((item) => (
+        <span className="specials-tag" key={item}>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2l2.4 5 5.6.5-4.3 3.7 1.3 5.4L12 19l-5 2.6 1.3-5.4L4 12.5l5.6-.5z"/></svg>
+          {item}
+        </span>
+      ))}
     </div>
   </div>
 </section>

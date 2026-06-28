@@ -9,6 +9,7 @@ const navItems = [
   { href: '/pro-mene', key: 'about' },
   { href: '/tury', key: 'excursions' },
   { href: '/kruizni', key: 'cruise' },
+  { href: '/#specials', key: 'specials' },
   { href: '/transferi', key: 'transfers' },
   { href: '/blog', key: 'blog' },
   { href: '/kontakty', key: 'contacts' },
