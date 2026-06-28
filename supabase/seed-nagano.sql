@@ -78,3 +78,8 @@ ON CONFLICT (slug) DO UPDATE SET
   includes=EXCLUDED.includes, excludes=EXCLUDED.excludes, seasons=EXCLUDED.seasons,
   sort_order=EXCLUDED.sort_order, is_active=EXCLUDED.is_active,
   gallery=EXCLUDED.gallery, stops=EXCLUDED.stops;
+
+-- Обложки карточек (cover_url) — из фото туров
+update tours set cover_url='/Nagano/photo_4_2026-06-27_13-58-51.jpg'  where slug='matsumoto-samurai';
+update tours set cover_url='/Nagano/photo_12_2026-06-27_13-58-51.jpg' where slug='nagano-premium';
+update tours set cover_url='/Nagano/photo_16_2026-06-27_13-58-51.jpg' where slug='kamikochi-matsumoto';
