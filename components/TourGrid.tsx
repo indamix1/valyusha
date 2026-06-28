@@ -16,17 +16,19 @@ interface Props {
     seasons: Record<string, string>
   }
   hideSeasons?: boolean
+  limit?: number
 }
 
-export default function TourGrid({ tours, labels, hideSeasons }: Props) {
+export default function TourGrid({ tours, labels, hideSeasons, limit }: Props) {
   const [season, setSeason] = useState<string>('all')
 
   const hasSeasonal = tours.some((t) => t.seasons?.length > 0)
 
-  const filtered =
+  const filtered = (
     season === 'all'
       ? tours
       : tours.filter((t) => t.seasons?.includes(season))
+  ).slice(0, limit ?? undefined)
 
   return (
     <>

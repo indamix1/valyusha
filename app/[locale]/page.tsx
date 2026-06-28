@@ -108,7 +108,8 @@ export default async function Home({
       <h2>{t('routes.title')}</h2>
     </div>
     <TourGrid
-      tours={tours.slice(0, 3)}
+      tours={tours}
+      limit={6}
       labels={{
         from: t('routes.from'),
         more: t('routes.more'),
@@ -122,7 +123,6 @@ export default async function Home({
           winter: t('routes.seasonWinter'),
         },
       }}
-      hideSeasons
     />
     {tours.length > 0 && (
       <div className="routes-foot"><Link href="/tury" className="btn btn-rose">{t('routes.all')}</Link></div>
