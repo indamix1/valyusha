@@ -23,7 +23,15 @@ export async function generateMetadata({
     title: ts('homeTitle'),
     description: ts('homeDescription'),
     alternates: { canonical: canonicalUrl(locale, ''), languages: languageAlternates('') },
-    openGraph: { title: ts('homeTitle'), description: ts('homeDescription'), url: canonicalUrl(locale, '') },
+    openGraph: {
+      title: ts('homeTitle'),
+      description: ts('homeDescription'),
+      url: canonicalUrl(locale, ''),
+      siteName: 'Valentina Japan Guide',
+      type: 'website',
+      locale,
+      images: [{ url: '/hero2.png', width: 1200, height: 630 }],
+    },
   }
 }
 
