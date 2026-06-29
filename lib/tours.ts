@@ -18,6 +18,11 @@ export function localizeTour(tour: Tour, locale: Locale): Tour {
   if (locale === 'ru') return base
   const t = tour.translations?.[locale]
   if (!t) return base
+  // Точки маршруту: накладаємо переклад title/text за індексом, image_url лишаємо.
+  const stops = base.stops.map((s, i) => {
+    const ts = t.stops?.[i]
+    return ts ? { ...s, title: ts.title || s.title, text: ts.text || s.text } : s
+  })
   return {
     ...base,
     title: t.title || base.title,
@@ -28,6 +33,7 @@ export function localizeTour(tour: Tour, locale: Locale): Tour {
     participants: t.participants || base.participants,
     includes: t.includes && t.includes.length ? t.includes : base.includes,
     excludes: t.excludes && t.excludes.length ? t.excludes : base.excludes,
+    stops,
   }
 }
 

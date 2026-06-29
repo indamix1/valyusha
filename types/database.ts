@@ -22,6 +22,8 @@ export interface TourTranslation {
   participants?: string
   includes?: string[]
   excludes?: string[]
+  // Переклади точок маршруту (програма дня), вирівняні за індексом з базовими stops.
+  stops?: { title?: string; text?: string }[]
 }
 
 export interface Tour {
