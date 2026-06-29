@@ -14,12 +14,23 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'TravelAgency',
   name: SITE_NAME,
+  alternateName: [
+    'Валентина — гид в Японии',
+    'Валентина Ямазаки',
+    'Гид Валентина в Японии',
+  ],
   url: SITE_URL,
   image: `${SITE_URL}/logo.png`,
   description:
-    'Лицензированный русскоязычный гид в Японии: авторские экскурсии, индивидуальные туры, туры для круизных туристов и трансферы.',
+    'Валентина — лицензированный русскоязычный гид в Японии: авторские экскурсии, индивидуальные туры, туры для круизных туристов и трансферы.',
   areaServed: 'Japan',
   telephone: '+81 80 3360 5724',
+  founder: {
+    '@type': 'Person',
+    name: 'Валентина Ямазаки',
+    alternateName: ['Valentina Yamazaki', 'Валентина гид в Японии'],
+    jobTitle: 'Лицензированный гид в Японии',
+  },
   sameAs: [
     'https://www.instagram.com/valentyna.japan.guide',
     'https://www.facebook.com/profile.php?id=61572204435760',
