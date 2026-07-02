@@ -167,7 +167,9 @@ export default function TourForm({ tour }: { tour?: Tour }) {
       }
 
       const payload = {
-        title, slug: slug || slugify(title), city: city || null,
+        // slug завжди нормалізуємо (нижній регістр, без пробілів/кирилиці),
+        // щоб адреса туру не ламалась (URL чутливий до регістру).
+        title, slug: slugify(slug || title), city: city || null,
         summary: summary || null, description: description || null,
         org_details: orgDetails || null,
         price: price === '' ? null : Number(price),
