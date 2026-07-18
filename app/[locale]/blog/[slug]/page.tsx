@@ -4,6 +4,7 @@ import { getTranslations } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
 import { getPost } from '@/lib/posts'
 import type { Locale } from '@/lib/content'
+import Gallery from '@/components/Gallery'
 
 const DATE_LOCALE: Record<string, string> = { ru: 'ru-RU', uk: 'uk-UA', en: 'en-US' }
 
@@ -29,6 +30,7 @@ export default async function PostPage({ params }: { params: Params }) {
   if (!post) notFound()
 
   const t = await getTranslations('blog')
+  const tour = await getTranslations('tour')
   const dl = DATE_LOCALE[locale] ?? 'ru-RU'
   const date = post.published_at
     ? new Date(post.published_at).toLocaleDateString(dl, { day: 'numeric', month: 'long', year: 'numeric' })
@@ -63,6 +65,18 @@ export default async function PostPage({ params }: { params: Params }) {
             ))}
         </div>
       </section>
+
+      {post.gallery.length > 0 && (
+        <section className="sec gallery-sec">
+          <div className="wrap">
+            <div className="sec-title">
+              <span className="eyebrow">{tour('galleryEyebrow')}</span>
+              <h2>{tour('galleryTitle')}</h2>
+            </div>
+            <Gallery images={post.gallery} start={0} alt={post.title} />
+          </div>
+        </section>
+      )}
     </article>
   )
 }

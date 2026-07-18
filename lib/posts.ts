@@ -5,14 +5,16 @@ import type { Post } from '@/types/database'
 
 // Накладає переклад потрібної мови (відкат на ru, якщо порожньо).
 export function localizePost(post: Post, locale: Locale): Post {
-  if (locale === 'ru') return post
+  // гарантуємо масив (колонка може бути відсутня до міграції)
+  const base: Post = { ...post, gallery: post.gallery ?? [] }
+  if (locale === 'ru') return base
   const t = post.translations?.[locale]
-  if (!t) return post
+  if (!t) return base
   return {
-    ...post,
-    title: t.title || post.title,
-    excerpt: t.excerpt || post.excerpt,
-    content: t.content || post.content,
+    ...base,
+    title: t.title || base.title,
+    excerpt: t.excerpt || base.excerpt,
+    content: t.content || base.content,
   }
 }
 

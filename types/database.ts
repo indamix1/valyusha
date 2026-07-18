@@ -68,6 +68,7 @@ export interface Post {
   excerpt: string | null
   content: string | null
   cover_url: string | null
+  gallery: string[]
   published: boolean
   published_at: string | null
   translations: Record<string, PostTranslation>
