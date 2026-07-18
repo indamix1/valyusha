@@ -292,11 +292,30 @@ export default function TourForm({ tour }: { tour?: Tour }) {
         </div>
       )}
       {galleryFiles.length > 0 && (
-        <p style={{ fontSize: 13, color: '#3C7A4E', marginTop: 4, marginBottom: 4 }}>
-          Нових файлів буде завантажено: {galleryFiles.length}
-        </p>
+        <div style={{ marginTop: 6, marginBottom: 8 }}>
+          <p style={{ fontSize: 13, color: '#3C7A4E', marginBottom: 6 }}>
+            Нових файлів буде завантажено: {galleryFiles.length}
+          </p>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+            {galleryFiles.map((f, i) => (
+              <span key={i} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: '#F3E8DD', borderRadius: 6, padding: '4px 8px', fontSize: 12, color: '#5C544C' }}>
+                {f.name.length > 24 ? f.name.slice(0, 24) + '…' : f.name}
+                <button type="button" title="Прибрати" onClick={() => setGalleryFiles(galleryFiles.filter((_, j) => j !== i))}
+                  style={{ border: 'none', background: 'transparent', color: '#BE6273', cursor: 'pointer', fontSize: 14, lineHeight: 1, padding: 0 }}>
+                  ×
+                </button>
+              </span>
+            ))}
+          </div>
+        </div>
       )}
-      <input style={{ ...inputStyle, padding: 8 }} type="file" accept="image/*" multiple onChange={(e) => setGalleryFiles(Array.from(e.target.files ?? []))} />
+      {/* Додаємо файли до списку (не замінюємо), скидаємо input щоб можна було вибрати той самий файл */}
+      <input style={{ ...inputStyle, padding: 8 }} type="file" accept="image/*" multiple
+        onChange={(e) => {
+          const picked = Array.from(e.target.files ?? [])
+          if (picked.length) setGalleryFiles((prev) => [...prev, ...picked])
+          e.target.value = ''
+        }} />
 
       <div style={{ marginTop: 24, paddingTop: 20, borderTop: '1px solid rgba(49,45,41,.15)' }}>
         <h3 style={{ fontSize: 16, fontWeight: 800, color: '#312D29', marginBottom: 4 }}>Точки маршруту</h3>
