@@ -30,6 +30,7 @@ export function localizeTour(tour: Tour, locale: Locale): Tour {
     description: t.description || base.description,
     org_details: t.org_details || base.org_details,
     price_details: t.price_details || base.price_details,
+    price_note: t.price_note || base.price_note,
     participants: t.participants || base.participants,
     includes: t.includes && t.includes.length ? t.includes : base.includes,
     excludes: t.excludes && t.excludes.length ? t.excludes : base.excludes,

@@ -19,6 +19,7 @@ export interface TourTranslation {
   description?: string
   org_details?: string
   price_details?: string
+  price_note?: string
   participants?: string
   includes?: string[]
   excludes?: string[]

@@ -13,7 +13,7 @@ create table if not exists tours (
   description text,                           -- повний опис для сторінки туру
   price       numeric(10,2),                  -- ціна числом (показуємо число)
   currency    text default 'USD',             -- USD / EUR / JPY
-  price_note  text default 'від, за особу',   -- підпис біля ціни
+  price_note  text,                              -- підпис біля ціни (RU; переклади в translations)
   duration    text,                           -- "1 день", "5 годин"
   format      text default 'both'             -- group | individual | both
               check (format in ('group','individual','both')),

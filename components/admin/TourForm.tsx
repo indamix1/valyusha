@@ -46,6 +46,7 @@ export default function TourForm({ tour }: { tour?: Tour }) {
   const [excludes, setExcludes] = useState((tour?.excludes ?? []).join('\n'))
   const [price, setPrice] = useState(tour?.price?.toString() ?? '')
   const [priceDetails, setPriceDetails] = useState(tour?.price_details ?? '')
+  const [priceNote, setPriceNote] = useState(tour?.price_note ?? '')
   const [duration, setDuration] = useState(tour?.duration ?? '')
   const [participants, setParticipants] = useState(tour?.participants ?? '')
   const [format, setFormat] = useState(tour?.format ?? 'both')
@@ -87,6 +88,7 @@ export default function TourForm({ tour }: { tour?: Tour }) {
     description: tour?.translations?.[loc]?.description ?? '',
     org_details: tour?.translations?.[loc]?.org_details ?? '',
     price_details: tour?.translations?.[loc]?.price_details ?? '',
+    price_note: tour?.translations?.[loc]?.price_note ?? '',
     participants: tour?.translations?.[loc]?.participants ?? '',
     includes: (tour?.translations?.[loc]?.includes ?? []).join('\n'),
     excludes: (tour?.translations?.[loc]?.excludes ?? []).join('\n'),
@@ -158,6 +160,7 @@ export default function TourForm({ tour }: { tour?: Tour }) {
         if (src.description.trim()) obj.description = src.description.trim()
         if (src.org_details.trim()) obj.org_details = src.org_details.trim()
         if (src.price_details.trim()) obj.price_details = src.price_details.trim()
+        if (src.price_note.trim()) obj.price_note = src.price_note.trim()
         if (src.participants.trim()) obj.participants = src.participants.trim()
         const inc = toLines(src.includes)
         if (inc.length) obj.includes = inc
@@ -175,6 +178,7 @@ export default function TourForm({ tour }: { tour?: Tour }) {
         price: price === '' ? null : Number(price),
         currency: 'USD',
         price_details: priceDetails || null,
+        price_note: priceNote || null,
         duration: duration || null,
         participants: participants || null,
         format,
@@ -241,6 +245,10 @@ export default function TourForm({ tour }: { tour?: Tour }) {
           <input style={inputStyle} value={duration} onChange={(e) => setDuration(e.target.value)} placeholder="6–8 годин" />
         </div>
       </div>
+
+      <label style={labelStyle}>Підпис під ціною (RU — необов&apos;язково)</label>
+      <input style={inputStyle} value={priceNote} onChange={(e) => setPriceNote(e.target.value)}
+        placeholder="за группу / за человека / за экскурсию" />
 
       <label style={labelStyle}>Кількість учасників</label>
       <input style={inputStyle} value={participants} onChange={(e) => setParticipants(e.target.value)} placeholder="до 7 осіб" />
@@ -405,6 +413,9 @@ export default function TourForm({ tour }: { tour?: Tour }) {
 
               <label style={labelStyle}>Деталі ціни</label>
               <textarea style={{ ...inputStyle, minHeight: 70 }} value={trans[loc].price_details} onChange={(e) => setT(loc, 'price_details', e.target.value)} />
+
+              <label style={labelStyle}>Підпис під ціною</label>
+              <input style={inputStyle} value={trans[loc].price_note} onChange={(e) => setT(loc, 'price_note', e.target.value)} />
             </div>
           </details>
         ))}
