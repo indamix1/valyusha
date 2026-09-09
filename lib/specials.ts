@@ -1,5 +1,5 @@
 // lib/specials.ts — спеціальні маршрути з БД, локалізовані.
-import { createClient } from '@/lib/supabase/server'
+import { createPublicClient } from '@/lib/supabase/public'
 import type { Locale } from '@/lib/content'
 import type { SpecialRoute } from '@/types/database'
 
@@ -16,7 +16,7 @@ export function localizeSpecial(s: SpecialRoute, locale: Locale): SpecialRoute {
 }
 
 export async function getSpecials(locale: Locale): Promise<SpecialRoute[]> {
-  const supabase = await createClient()
+  const supabase = createPublicClient()
   const { data } = await supabase
     .from('special_routes')
     .select('*')
@@ -29,7 +29,7 @@ export async function getSpecials(locale: Locale): Promise<SpecialRoute[]> {
 export async function getSpecial(slug: string, locale: Locale): Promise<SpecialRoute | null> {
   let normalized = slug
   try { normalized = decodeURIComponent(slug) } catch {}
-  const supabase = await createClient()
+  const supabase = createPublicClient()
   const { data } = await supabase
     .from('special_routes')
     .select('*')

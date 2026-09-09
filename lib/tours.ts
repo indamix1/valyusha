@@ -1,5 +1,5 @@
 // lib/tours.ts — читає активні тури з БД і локалізує їх під поточну мову.
-import { createClient } from '@/lib/supabase/server'
+import { createPublicClient } from '@/lib/supabase/public'
 import type { Locale } from '@/lib/content'
 import type { Tour } from '@/types/database'
 
@@ -40,7 +40,7 @@ export function localizeTour(tour: Tour, locale: Locale): Tour {
 
 // Активні тури для сітки головної: відсортовані за sort_order, локалізовані.
 export async function getTours(locale: Locale): Promise<Tour[]> {
-  const supabase = await createClient()
+  const supabase = createPublicClient()
   const { data } = await supabase
     .from('tours')
     .select('*')
@@ -56,7 +56,7 @@ export async function getToursByCategory(
   category: string,
   locale: Locale
 ): Promise<Tour[]> {
-  const supabase = await createClient()
+  const supabase = createPublicClient()
   const { data } = await supabase
     .from('tours')
     .select('*')
@@ -82,7 +82,7 @@ export async function getTour(
     // лишаємо як є, якщо це не валідний %-escape
   }
 
-  const supabase = await createClient()
+  const supabase = createPublicClient()
   const { data } = await supabase
     .from('tours')
     .select('*')

@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
+import { revalidateSite } from '@/lib/revalidate'
 import type { Post, PostTranslation } from '@/types/database'
 
 // проста транслітерація для slug (кирилиця -> латиниця)
@@ -105,6 +106,7 @@ export default function PostForm({ post }: { post?: Post }) {
         ? await supabase.from('posts').update(payload).eq('id', post.id)
         : await supabase.from('posts').insert(payload)
       if (res.error) throw res.error
+      await revalidateSite()
 
       router.push('/admin/blog')
       router.refresh()

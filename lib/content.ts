@@ -1,5 +1,5 @@
 // lib/content.ts — дістає тексти головної з БД відповідною мовою.
-import { createClient } from '@/lib/supabase/server'
+import { createPublicClient } from '@/lib/supabase/public'
 
 export type Locale = 'ru' | 'uk' | 'en'
 
@@ -7,7 +7,7 @@ export type Locale = 'ru' | 'uk' | 'en'
 export async function getSiteContent(
   locale: Locale
 ): Promise<Record<string, string>> {
-  const supabase = await createClient()
+  const supabase = createPublicClient()
   const { data } = await supabase
     .from('site_content')
     .select('key, value, value_uk, value_en')

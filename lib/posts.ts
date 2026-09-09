@@ -1,5 +1,5 @@
 // lib/posts.ts — читає опубліковані статті блогу і локалізує їх.
-import { createClient } from '@/lib/supabase/server'
+import { createPublicClient } from '@/lib/supabase/public'
 import type { Locale } from '@/lib/content'
 import type { Post } from '@/types/database'
 
@@ -20,7 +20,7 @@ export function localizePost(post: Post, locale: Locale): Post {
 
 // Опубліковані статті: новіші зверху, локалізовані.
 export async function getPosts(locale: Locale): Promise<Post[]> {
-  const supabase = await createClient()
+  const supabase = createPublicClient()
   const { data } = await supabase
     .from('posts')
     .select('*')
@@ -43,7 +43,7 @@ export async function getPost(
     // лишаємо як є
   }
 
-  const supabase = await createClient()
+  const supabase = createPublicClient()
   const { data } = await supabase
     .from('posts')
     .select('*')

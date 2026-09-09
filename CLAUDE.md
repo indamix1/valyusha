@@ -24,10 +24,10 @@
 ```
 app/
   layout.tsx              мінімальний root (<html lang="ru">, globals.css)
-  [locale]/
+  (site)/[locale]/       (route group; корневой <html lang={locale}> + metadata тут)
     layout.tsx            NextIntlClientProvider + <Header/> {children} <Footer/>
     page.tsx              головна (server component; тексти hero/about з БД)
-  admin/                  адмінка (поза [locale], одномовна)
+  (admin)/admin/          адмінка (окремий root layout, force-dynamic, noindex)
     page.tsx              дашборд (лічильники + перехід у розділи)
     login/page.tsx        вхід (Supabase Auth)
     tours/page.tsx        список турів
@@ -43,7 +43,9 @@ i18n/
   navigation.ts           createNavigation (локалізовані Link/useRouter/usePathname)
 messages/{ru,uk,en}.json  переклади інтерфейсу (поки лише nav)
 lib/
-  supabase/server.ts      серверний клієнт Supabase
+  supabase/server.ts      серверний клієнт Supabase (cookies; адмінка)
+  supabase/public.ts      публічний клієнт без cookies (публічні сторінки, ISR 5 хв)
+  revalidate.ts           server action: скидання кешу після збереження в адмінці
   supabase/client.ts      браузерний клієнт Supabase
   content.ts              getSiteContent(locale) -> тексти головної з відкатом на ru
 types/database.ts         типи таблиць

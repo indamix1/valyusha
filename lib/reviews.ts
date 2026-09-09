@@ -1,5 +1,5 @@
 // lib/reviews.ts — читає схвалені відгуки з БД і локалізує їх.
-import { createClient } from '@/lib/supabase/server'
+import { createPublicClient } from '@/lib/supabase/public'
 import type { Locale } from '@/lib/content'
 import type { Review } from '@/types/database'
 
@@ -17,7 +17,7 @@ export function localizeReview(review: Review, locale: Locale): Review {
 
 // Схвалені відгуки для головної: за sort_order, локалізовані.
 export async function getReviews(locale: Locale): Promise<Review[]> {
-  const supabase = await createClient()
+  const supabase = createPublicClient()
   const { data } = await supabase
     .from('reviews')
     .select('*')

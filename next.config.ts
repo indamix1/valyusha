@@ -8,6 +8,10 @@ const nextConfig: NextConfig = {
   experimental: {
     viewTransition: true,
   },
+  // Дозволяємо next/image оптимізувати фото зі Supabase Storage.
+  images: {
+    remotePatterns: [{ protocol: 'https', hostname: '*.supabase.co', pathname: '/storage/v1/object/public/**' }],
+  },
 }
 
 export default withNextIntl(nextConfig)

@@ -3,7 +3,11 @@
 // понимал, что это одна страница на трёх языках, а не дубли.
 import type { MetadataRoute } from 'next'
 import { SITE_URL, LOCALES, languageAlternates } from '@/lib/site'
-import { createClient } from '@/lib/supabase/server'
+import { createPublicClient } from '@/lib/supabase/public'
+
+// Кеш сторінки: перегенерація не частіше ніж раз на 5 хв (плюс скидання з адмінки).
+export const revalidate = 300
+
 
 const STATIC: { path: string; priority: number; freq: 'weekly' | 'monthly' }[] = [
   { path: '', priority: 1, freq: 'weekly' },
@@ -23,7 +27,7 @@ type Entry = { path: string; priority: number; freq: 'weekly' | 'monthly'; lastM
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const entries: Entry[] = [...STATIC]
   try {
-    const supabase = await createClient()
+    const supabase = createPublicClient()
     const [{ data: tours }, { data: specials }, { data: posts }] = await Promise.all([
       supabase.from('tours').select('slug, created_at').eq('is_active', true),
       supabase.from('special_routes').select('slug, created_at').eq('is_active', true),

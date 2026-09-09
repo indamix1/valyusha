@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
+import { revalidateSite } from '@/lib/revalidate'
 import type { Tour, TourTranslation, TourStop } from '@/types/database'
 
 // точка маршруту у формі (file — нове фото для завантаження)
@@ -198,6 +199,7 @@ export default function TourForm({ tour }: { tour?: Tour }) {
         : await supabase.from('tours').insert(payload)
 
       if (res.error) throw res.error
+      await revalidateSite()
       router.push('/admin/tours')
       router.refresh()
     } catch (err: unknown) {

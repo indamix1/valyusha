@@ -1,5 +1,5 @@
 // lib/hotels.ts — читає активні готелі з БД і локалізує під поточну мову.
-import { createClient } from '@/lib/supabase/server'
+import { createPublicClient } from '@/lib/supabase/public'
 import type { Locale } from '@/lib/content'
 import type { Hotel } from '@/types/database'
 
@@ -17,7 +17,7 @@ export function localizeHotel(hotel: Hotel, locale: Locale): Hotel {
 }
 
 export async function getHotels(locale: Locale): Promise<Hotel[]> {
-  const supabase = await createClient()
+  const supabase = createPublicClient()
   const { data } = await supabase
     .from('hotels')
     .select('*')

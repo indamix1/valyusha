@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { Link } from '@/i18n/navigation'
+import Image from 'next/image'
 import { formatPrice } from '@/lib/format'
 import type { Tour } from '@/types/database'
 
@@ -56,18 +57,17 @@ export default function TourGrid({ tours, labels, hideSeasons, limit }: Props) {
               <Link href={`/tury/${tour.slug}`} className="route-link-wrap" key={tour.id}>
                 <article className="route">
                   <div className="route-visual">
-                    <div
-                      className={tour.cover_url ? 'route-img' : `route-img r${(i % 6) + 1}`}
-                      style={
-                        tour.cover_url
-                          ? {
-                              backgroundImage: `url(${tour.cover_url})`,
-                              backgroundSize: 'cover',
-                              backgroundPosition: 'center',
-                            }
-                          : undefined
-                      }
-                    >
+                    <div className={tour.cover_url ? 'route-img' : `route-img r${(i % 6) + 1}`}>
+                      {tour.cover_url && (
+                        <Image
+                          src={tour.cover_url}
+                          alt={tour.title}
+                          fill
+                          sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw"
+                          style={{ objectFit: 'cover' }}
+                          priority={i < 3}
+                        />
+                      )}
                       {price && <span className="price">{labels.from} {price}</span>}
                     </div>
                     <div className="route-hover">
