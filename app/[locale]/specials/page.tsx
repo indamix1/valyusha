@@ -3,7 +3,7 @@ import { getTranslations } from 'next-intl/server'
 import { getSiteContent, type Locale } from '@/lib/content'
 import { getSpecials } from '@/lib/specials'
 import { Link } from '@/i18n/navigation'
-import { canonicalUrl, languageAlternates } from '@/lib/site'
+import { canonicalUrl, languageAlternates, ogBase } from '@/lib/site'
 
 type Params = Promise<{ locale: string }>
 
@@ -14,6 +14,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
     title: t('title'),
     description: t('intro'),
     alternates: { canonical: canonicalUrl(locale, '/specials'), languages: languageAlternates('/specials') },
+    openGraph: { title: t('title'), description: t('intro'), type: 'website', ...ogBase(locale, '/specials') },
   }
 }
 

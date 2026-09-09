@@ -5,20 +5,21 @@ import { getSiteContent, type Locale } from '@/lib/content'
 import { getSpecial } from '@/lib/specials'
 import BackLink from '@/components/BackLink'
 import Gallery from '@/components/Gallery'
-import { canonicalUrl, languageAlternates } from '@/lib/site'
+import { canonicalUrl, languageAlternates, ogBase, metaDescription } from '@/lib/site'
 
 type Params = Promise<{ locale: string; slug: string }>
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const { locale, slug } = await params
   const s = await getSpecial(slug, locale as Locale)
-  if (!s) return { title: 'Маршрут не найден' }
+  if (!s) return { title: 'Маршрут не найден', robots: { index: false } }
   const path = `/specials/${slug}`
+  const description = metaDescription(s.description)
   return {
     title: s.title,
-    description: s.description ?? undefined,
+    description,
     alternates: { canonical: canonicalUrl(locale, path), languages: languageAlternates(path) },
-    openGraph: { title: s.title, description: s.description ?? undefined, url: canonicalUrl(locale, path), images: s.cover_url ? [s.cover_url] : undefined },
+    openGraph: { title: s.title, description, type: 'website', ...ogBase(locale, path, s.cover_url) },
   }
 }
 

@@ -7,7 +7,9 @@ import Gallery from '@/components/Gallery'
 import { getTour, formatPrice } from '@/lib/tours'
 import { getPexelsImage } from '@/lib/pexels'
 import { getSiteContent, type Locale } from '@/lib/content'
-import { canonicalUrl, languageAlternates } from '@/lib/site'
+import { canonicalUrl, languageAlternates, ogBase, metaDescription } from '@/lib/site'
+import { tourSchema, breadcrumbs } from '@/lib/schema'
+import JsonLd from '@/components/JsonLd'
 import type { TourFormat } from '@/types/database'
 
 type Params = Promise<{ locale: string; slug: string }>
@@ -19,17 +21,19 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale, slug } = await params
   const tour = await getTour(slug, locale as Locale)
-  if (!tour) return { title: 'Тур не найден' }
+  if (!tour) return { title: 'Тур не найден', robots: { index: false } }
   const path = `/tury/${slug}`
+  const description = metaDescription(tour.summary ?? tour.description)
+  const title = tour.city ? `${tour.title} — ${tour.city}` : tour.title
   return {
-    title: tour.title,
-    description: tour.summary ?? undefined,
+    title,
+    description,
     alternates: { canonical: canonicalUrl(locale, path), languages: languageAlternates(path) },
     openGraph: {
-      title: tour.title,
-      description: tour.summary ?? undefined,
-      url: canonicalUrl(locale, path),
-      images: tour.cover_url ? [tour.cover_url] : undefined,
+      title,
+      description,
+      type: 'website',
+      ...ogBase(locale, path, tour.cover_url),
     },
   }
 }
@@ -57,8 +61,19 @@ export default async function TourPage({ params }: { params: Params }) {
     )
   )
 
+  const nav = await getTranslations('nav')
   return (
     <article className="tour-page">
+      <JsonLd
+        data={[
+          tourSchema(locale, tour),
+          breadcrumbs(locale, [
+            { name: nav('home'), path: '' },
+            { name: nav('excursions'), path: '/tury' },
+            { name: tour.title, path: `/tury/${slug}` },
+          ]),
+        ]}
+      />
       <BackLink href="/#routes" label={t('back')} />
       <div
         className={tour.cover_url ? 'tour-hero' : 'tour-hero tour-hero-fallback'}

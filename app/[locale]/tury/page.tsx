@@ -4,7 +4,7 @@ import { getTours } from '@/lib/tours'
 import type { Locale } from '@/lib/content'
 import TourGrid from '@/components/TourGrid'
 import BackLink from '@/components/BackLink'
-import { canonicalUrl, languageAlternates } from '@/lib/site'
+import { canonicalUrl, languageAlternates, ogBase } from '@/lib/site'
 
 type Params = Promise<{ locale: string }>
 
@@ -15,6 +15,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
     title: t('title'),
     description: t('subtitle'),
     alternates: { canonical: canonicalUrl(locale, '/tury'), languages: languageAlternates('/tury') },
+    openGraph: { title: t('title'), description: t('subtitle'), type: 'website', ...ogBase(locale, '/tury') },
   }
 }
 

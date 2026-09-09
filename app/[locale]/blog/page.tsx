@@ -3,6 +3,7 @@ import { getTranslations } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
 import { getPosts } from '@/lib/posts'
 import type { Locale } from '@/lib/content'
+import { canonicalUrl, languageAlternates, ogBase } from '@/lib/site'
 
 const DATE_LOCALE: Record<string, string> = { ru: 'ru-RU', uk: 'uk-UA', en: 'en-US' }
 
@@ -13,7 +14,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'blog' })
-  return { title: `${t('title')} · Valyusha` }
+  return {
+    title: t('title'),
+    description: t('seoDescription'),
+    alternates: { canonical: canonicalUrl(locale, '/blog'), languages: languageAlternates('/blog') },
+    openGraph: { title: t('title'), description: t('seoDescription'), type: 'website', ...ogBase(locale, '/blog') },
+  }
 }
 
 export default async function BlogPage({

@@ -10,7 +10,7 @@ import ReviewForm from '@/components/ReviewForm'
 import ReviewsList from '@/components/ReviewsList'
 import ScrollLink from '@/components/ScrollLink'
 import type { Metadata } from 'next'
-import { canonicalUrl, languageAlternates } from '@/lib/site'
+import { canonicalUrl, languageAlternates, ogBase } from '@/lib/site'
 
 export async function generateMetadata({
   params,
@@ -26,11 +26,8 @@ export async function generateMetadata({
     openGraph: {
       title: ts('homeTitle'),
       description: ts('homeDescription'),
-      url: canonicalUrl(locale, ''),
-      siteName: 'Valentina Japan Guide',
       type: 'website',
-      locale,
-      images: [{ url: '/hero2.png', width: 1200, height: 630 }],
+      ...ogBase(locale, ''),
     },
   }
 }

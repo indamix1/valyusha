@@ -2,7 +2,8 @@
 // Шапка/футер тепер у app/[locale]/layout.tsx (щоб працювали мови).
 import './globals.css'
 import type { Metadata, Viewport } from 'next'
-import { SITE_URL, SITE_NAME } from '@/lib/site'
+import { getLocale } from 'next-intl/server'
+import { SITE_URL, SITE_NAME, OG_IMAGE } from '@/lib/site'
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -17,26 +18,33 @@ export const metadata: Metadata = {
     type: 'website',
     siteName: SITE_NAME,
     url: SITE_URL,
-    images: [{ url: '/hero2.png', width: 1200, height: 630 }],
+    images: [OG_IMAGE],
   },
   twitter: { card: 'summary_large_image' },
-  robots: { index: true, follow: true },
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large' } },
   icons: { icon: '/logo.png', apple: '/logo.png' },
+  // Подтверждение сайта в Google Search Console (Vercel → Environment Variables).
+  verification: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+    ? { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION }
+    : undefined,
 }
 
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
+  themeColor: '#FBF6F1',
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  // Язык документа = язык страницы (/ru, /uk, /en); для админки — ru.
+  const locale = await getLocale()
   return (
-    <html lang="ru" data-scroll-behavior="smooth">
+    <html lang={locale} data-scroll-behavior="smooth">
       <body>{children}</body>
     </html>
   )

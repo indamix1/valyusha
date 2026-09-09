@@ -5,6 +5,9 @@ import { Link } from '@/i18n/navigation'
 import { getPost } from '@/lib/posts'
 import type { Locale } from '@/lib/content'
 import Gallery from '@/components/Gallery'
+import { canonicalUrl, languageAlternates, ogBase, metaDescription } from '@/lib/site'
+import { postSchema, breadcrumbs } from '@/lib/schema'
+import JsonLd from '@/components/JsonLd'
 
 const DATE_LOCALE: Record<string, string> = { ru: 'ru-RU', uk: 'uk-UA', en: 'en-US' }
 
@@ -17,10 +20,20 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale, slug } = await params
   const post = await getPost(slug, locale as Locale)
-  if (!post) return { title: 'Стаття не знайдена' }
+  if (!post) return { title: 'Статья не найдена', robots: { index: false } }
+  const path = `/blog/${slug}`
+  const description = metaDescription(post.excerpt ?? post.content)
   return {
-    title: `${post.title} · Valyusha`,
-    description: post.excerpt ?? undefined,
+    title: post.title,
+    description,
+    alternates: { canonical: canonicalUrl(locale, path), languages: languageAlternates(path) },
+    openGraph: {
+      title: post.title,
+      description,
+      type: 'article',
+      publishedTime: post.published_at ?? undefined,
+      ...ogBase(locale, path, post.cover_url),
+    },
   }
 }
 
@@ -36,8 +49,19 @@ export default async function PostPage({ params }: { params: Params }) {
     ? new Date(post.published_at).toLocaleDateString(dl, { day: 'numeric', month: 'long', year: 'numeric' })
     : ''
 
+  const nav = await getTranslations('nav')
   return (
     <article className="post-page">
+      <JsonLd
+        data={[
+          postSchema(locale, post),
+          breadcrumbs(locale, [
+            { name: nav('home'), path: '' },
+            { name: t('title'), path: '/blog' },
+            { name: post.title, path: `/blog/${slug}` },
+          ]),
+        ]}
+      />
       <div
         className={post.cover_url ? 'tour-hero' : 'tour-hero tour-hero-fallback'}
         style={post.cover_url ? { backgroundImage: `url(${post.cover_url})` } : undefined}
