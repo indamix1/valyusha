@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { createPublicClient } from '@/lib/supabase/public'
 import { notFound } from 'next/navigation'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { getSiteContent, type Locale } from '@/lib/content'
@@ -9,6 +10,11 @@ import { canonicalUrl, languageAlternates, ogBase, metaDescription } from '@/lib
 
 // Кеш сторінки: перегенерація не частіше ніж раз на 5 хв (плюс скидання з адмінки).
 export const revalidate = 300
+
+export async function generateStaticParams() {
+  const { data } = await createPublicClient().from('special_routes').select('slug').eq('is_active', true)
+  return (data ?? []).map((s) => ({ slug: s.slug as string }))
+}
 
 
 type Params = Promise<{ locale: string; slug: string }>

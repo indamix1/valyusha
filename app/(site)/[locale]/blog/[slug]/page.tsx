@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { createPublicClient } from '@/lib/supabase/public'
 import { notFound } from 'next/navigation'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
@@ -11,6 +12,11 @@ import JsonLd from '@/components/JsonLd'
 
 // Кеш сторінки: перегенерація не частіше ніж раз на 5 хв (плюс скидання з адмінки).
 export const revalidate = 300
+
+export async function generateStaticParams() {
+  const { data } = await createPublicClient().from('posts').select('slug').eq('published', true)
+  return (data ?? []).map((p) => ({ slug: p.slug as string }))
+}
 
 
 const DATE_LOCALE: Record<string, string> = { ru: 'ru-RU', uk: 'uk-UA', en: 'en-US' }

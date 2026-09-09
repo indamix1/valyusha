@@ -10,6 +10,10 @@ import { canonicalUrl, languageAlternates, ogBase, metaDescription } from '@/lib
 // Кеш сторінки: перегенерація не частіше ніж раз на 5 хв (плюс скидання з адмінки).
 export const revalidate = 300
 
+export function generateStaticParams() {
+  return CATEGORIES.map((category) => ({ category }))
+}
+
 
 // Категорія сторінки -> категорія турів у БД (де є прив'язані тури).
 const TOUR_CATEGORY: Record<string, string> = {

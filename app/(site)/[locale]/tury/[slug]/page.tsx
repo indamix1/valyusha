@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { createPublicClient } from '@/lib/supabase/public'
 import { notFound } from 'next/navigation'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
@@ -14,6 +15,12 @@ import type { TourFormat } from '@/types/database'
 
 // Кеш сторінки: перегенерація не частіше ніж раз на 5 хв (плюс скидання з адмінки).
 export const revalidate = 300
+
+// Відомі slug-и на момент збірки; нові тури рендеряться на вимогу і теж кешуються.
+export async function generateStaticParams() {
+  const { data } = await createPublicClient().from('tours').select('slug').eq('is_active', true)
+  return (data ?? []).map((t) => ({ slug: t.slug as string }))
+}
 
 
 type Params = Promise<{ locale: string; slug: string }>
